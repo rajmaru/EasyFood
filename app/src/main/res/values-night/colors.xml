@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="theme">#00A884</color>
+
+    <color name="background">#121B22</color>
+    <color name="surface">#1F2C34</color>
+
+    <color name="text_title">#E8ECEF</color>
+    <color name="text_subtitle">#85969E</color>
+    <color name="card_title">#E8ECEF</color>
+
+    <color name="statusBar">#1F2C34</color>
+
+    <color name="toolbar_color">#1F2C34</color>
+    <color name="onToolbar">#F4F4F4</color>
+
+    <color name="btm_nav_color_checked">#00A884</color>
+    <color name="btm_nav_color_unchecked">#85969E</color>
+    <color name="btm_nav_color_ripple">#1F2D38</color>
+
+</resources>
