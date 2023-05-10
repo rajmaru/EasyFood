@@ -8,9 +8,9 @@
     <color name="background">#121B22</color>
     <color name="surface">#1F2C34</color>
 
-    <color name="text_title">#E8ECEF</color>
+    <color name="text_title">#DADEE1</color>
     <color name="text_subtitle">#85969E</color>
-    <color name="card_title">#E8ECEF</color>
+    <color name="card_title">#EEE9E9</color>
 
     <color name="statusBar">#1F2C34</color>
 

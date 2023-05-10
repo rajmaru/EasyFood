@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".HomeFragment">
+    tools:context=".fragments.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,11 +16,11 @@
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="16dp"
-            app:elevation="10dp"
             android:background="@color/surface"
             app:cardCornerRadius="16dp"
+            app:elevation="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -33,8 +33,7 @@
                     android:id="@+id/img_random_meal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/test_img" />
+                    android:scaleType="centerCrop" />
 
                 <ImageView
                     android:id="@+id/img_gradient_random_meal"
@@ -53,10 +52,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="6dp"
                     android:fontFamily="@font/regular"
                     android:gravity="center"
-                    android:text="Vegetable Salad"
+                    android:text=""
                     android:textColor="@color/card_title"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -88,8 +87,8 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/regular"
             android:text="Popular"
-            android:textColor="@color/text_title"
-            android:textSize="18sp"
+            android:textColor="@color/text_subtitle"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rv_home_categories" />
 
