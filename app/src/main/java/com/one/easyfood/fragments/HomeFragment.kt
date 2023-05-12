@@ -1,14 +1,17 @@
 package com.one.easyfood.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.one.easyfood.MealActivity
 import com.one.easyfood.adapters.CategoriesChipAdapter
 import com.one.easyfood.adapters.PopularMealsAdapter
 import com.one.easyfood.adapters.RecommendedAdapter
@@ -23,6 +26,9 @@ class HomeFragment : Fragment() {
     private lateinit var categoriesChipAdapter: CategoriesChipAdapter
     private lateinit var popularMealsAdapter: PopularMealsAdapter
     private lateinit var recommendedAdapter: RecommendedAdapter
+    private lateinit var randomMeal: Meal
+    private var popularMealList = ArrayList<Meal>()
+    private var recommendedMealList = ArrayList<Meal>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,19 +54,30 @@ class HomeFragment : Fragment() {
         getPopularMeals()
         getRecommended()
 
+        onRandomMealClick()
+
         setCategoriesChipRV()
         setPopularMealsRV()
         setRecommendedRV()
+    }
+
+    private fun onRandomMealClick() {
+        binding.cardRandomMeal.setOnClickListener{
+            var intent = Intent(this.activity, MealActivity::class.java)
+            intent.putExtra("MEAL_ID",randomMeal.idMeal)
+            startActivity(intent)
+        }
     }
 
     //Random Meal
     private fun getRandomMeal() {
         viewModel.getRandomMeal().observe(viewLifecycleOwner, Observer { meal ->
             if (meal != null) {
+                randomMeal = meal
                 Glide.with(this@HomeFragment)
-                    .load(meal.strMealThumb)
+                    .load(randomMeal.strMealThumb)
                     .into(binding.imgRandomMeal)
-                binding.tvRandomMeal.text = meal.strMeal
+                binding.tvRandomMeal.text = randomMeal.strMeal
             }
         })
     }
@@ -83,7 +100,7 @@ class HomeFragment : Fragment() {
 
     //Popular Meals
     private fun getPopularMeals() {
-        viewModel.getPopularMeals("Chicken").observe(viewLifecycleOwner, Observer { popularMeals ->
+        viewModel.getPopularMeals("Beef").observe(viewLifecycleOwner, Observer { popularMeals ->
             if (popularMeals != null) {
                 popularMealsAdapter.setPopularMealsList(popularMealsList = popularMeals.meals as ArrayList<Meal>)
             }

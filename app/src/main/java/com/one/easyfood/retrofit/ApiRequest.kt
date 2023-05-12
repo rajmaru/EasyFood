@@ -16,4 +16,7 @@ interface ApiRequest {
 
     @GET("filter.php")
     fun getMealsByCategory(@Query("c") categoryName: String): Call<MealsList>
+
+    @GET("lookup.php")
+    fun getMealsById(@Query("i") mealId: String): Call<MealsList>
 }
