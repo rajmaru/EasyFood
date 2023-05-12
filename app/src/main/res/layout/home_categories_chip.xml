@@ -3,23 +3,22 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/surface"
+    android:backgroundTint="@color/surface"
     app:cardCornerRadius="12dp"
-    app:elevation="10dp"
-    android:layout_margin="10dp">
+    android:layout_margin="8dp">
 
         <TextView
             android:id="@+id/tv_category_chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Vegan"
-            android:fontFamily="@font/regular"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="@color/text_title"
             android:layout_marginStart="14dp"
-            android:layout_marginEnd="14dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/regular"
+            android:text="Vegan"
+            android:textColor="@color/text_subtitle"
+            android:textSize="14sp" />
 
 </androidx.cardview.widget.CardView>
