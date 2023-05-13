@@ -17,6 +17,7 @@ class ApiRepository {
     private var categories = MutableLiveData<CategoryList?>()
     private var popularMeals = MutableLiveData<MealsList?>()
     private var recommendedMeals = MutableLiveData<MealsList?>()
+    private var mealById = MutableLiveData<Meal?>()
 
     fun getRandomMeal(): LiveData<Meal?> {
         RetrofitRequest.apiRequest.getRandomMeal().enqueue(object : Callback<MealsList> {
@@ -28,7 +29,6 @@ class ApiRepository {
 
             override fun onFailure(call: Call<MealsList>, t: Throwable) {
                 Log.d("RandomMeal Repo", t.message.toString())
-                randomMeal.value = null
             }
         })
         return randomMeal
@@ -44,7 +44,6 @@ class ApiRepository {
 
             override fun onFailure(call: Call<CategoryList>, t: Throwable) {
                 Log.d("Category Repo", t.message.toString())
-                categories.value = null
             }
         })
         return categories
@@ -61,7 +60,6 @@ class ApiRepository {
 
                 override fun onFailure(call: Call<MealsList>, t: Throwable) {
                     Log.d("PopularMeals Repo", t.message.toString())
-                    popularMeals.value = null
                 }
             })
         return popularMeals
@@ -82,6 +80,22 @@ class ApiRepository {
                 }
             })
         return recommendedMeals
+    }
+
+    fun getMealsById(mealId: String): LiveData<Meal?> {
+        RetrofitRequest.apiRequest.getMealsById(mealId).enqueue(object : Callback<MealsList> {
+            override fun onResponse(call: Call<MealsList>, response: Response<MealsList>) {
+                if (response.body() != null) {
+                    mealById.value = response.body()!!.meals[0]
+                }
+            }
+
+            override fun onFailure(call: Call<MealsList>, t: Throwable) {
+                Log.d("MealById Repo", t.message.toString())
+            }
+
+        })
+        return mealById
     }
 
 }

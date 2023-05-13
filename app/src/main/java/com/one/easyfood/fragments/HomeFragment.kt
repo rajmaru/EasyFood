@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -27,8 +26,6 @@ class HomeFragment : Fragment() {
     private lateinit var popularMealsAdapter: PopularMealsAdapter
     private lateinit var recommendedAdapter: RecommendedAdapter
     private lateinit var randomMeal: Meal
-    private var popularMealList = ArrayList<Meal>()
-    private var recommendedMealList = ArrayList<Meal>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,22 +46,32 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        onRefresh()
         getRandomMeal()
         getCategories()
         getPopularMeals()
         getRecommended()
 
-        onRandomMealClick()
+        onClick()
 
         setCategoriesChipRV()
         setPopularMealsRV()
         setRecommendedRV()
     }
 
-    private fun onRandomMealClick() {
-        binding.cardRandomMeal.setOnClickListener{
+    private fun onRefresh() {
+        binding.refresh.setOnRefreshListener {
+            getRandomMeal()
+            getCategories()
+            getPopularMeals()
+            getRecommended()
+        }
+    }
+
+    private fun onClick() {
+        binding.cardRandomMeal.setOnClickListener {
             var intent = Intent(this.activity, MealActivity::class.java)
-            intent.putExtra("MEAL_ID",randomMeal.idMeal)
+            intent.putExtra("MEAL_ID", randomMeal.idMeal)
             startActivity(intent)
         }
     }
@@ -78,6 +85,7 @@ class HomeFragment : Fragment() {
                     .load(randomMeal.strMealThumb)
                     .into(binding.imgRandomMeal)
                 binding.tvRandomMeal.text = randomMeal.strMeal
+                binding.refresh.isRefreshing = false
             }
         })
     }
@@ -102,7 +110,10 @@ class HomeFragment : Fragment() {
     private fun getPopularMeals() {
         viewModel.getPopularMeals("Beef").observe(viewLifecycleOwner, Observer { popularMeals ->
             if (popularMeals != null) {
-                popularMealsAdapter.setPopularMealsList(popularMealsList = popularMeals.meals as ArrayList<Meal>)
+                popularMealsAdapter.setPopularMealsList(
+                    this.requireContext(),
+                    popularMeals.meals as ArrayList<Meal>
+                )
             }
         })
     }
@@ -115,11 +126,15 @@ class HomeFragment : Fragment() {
 
     //Recommended Meals
     private fun getRecommended() {
-        viewModel.getRecommendedMeals("Vegetarian").observe(viewLifecycleOwner, Observer { recommendedList ->
-            if (recommendedList != null) {
-                recommendedAdapter.setRecommendedList(recommendedList = recommendedList.meals as ArrayList<Meal>)
-            }
-        })
+        viewModel.getRecommendedMeals("Vegetarian")
+            .observe(viewLifecycleOwner, Observer { recommendedList ->
+                if (recommendedList != null) {
+                    recommendedAdapter.setRecommendedList(
+                        this.requireContext(),
+                        recommendedList.meals as ArrayList<Meal>
+                    )
+                }
+            })
     }
 
     private fun setRecommendedRV() {

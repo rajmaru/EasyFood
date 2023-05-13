@@ -1,6 +1,7 @@
 package com.one.easyfood.retrofit
 
 import com.one.easyfood.models.CategoryList
+import com.one.easyfood.models.Meal
 import com.one.easyfood.models.MealsList
 import retrofit2.Call
 import retrofit2.http.GET
