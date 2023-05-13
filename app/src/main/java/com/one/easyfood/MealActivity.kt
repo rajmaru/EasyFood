@@ -1,6 +1,9 @@
 package com.one.easyfood
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -11,9 +14,7 @@ import com.one.easyfood.databinding.ActivityMealBinding
 import com.one.easyfood.models.Ingredients
 import com.one.easyfood.models.Meal
 import com.one.easyfood.viewmodel.ApiViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+
 
 class MealActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMealBinding
@@ -28,12 +29,14 @@ class MealActivity : AppCompatActivity() {
         binding = ActivityMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+
         viewModel = ViewModelProvider(this)[ApiViewModel::class.java]
         ingredientsAdapter = IngredientsAdapter()
 
         getMealId()
         setIngredientsRV()
-        onBackArrowClick()
+        onClick()
 
     }
 
@@ -57,6 +60,7 @@ class MealActivity : AppCompatActivity() {
         Glide.with(this@MealActivity)
             .load(meal.strMealThumb)
             .into(binding.imgMeal)
+        binding.tvInstructions.text = meal.strInstructions
     }
 
     private fun getIngredientsList(meal: Meal) {
@@ -82,17 +86,23 @@ class MealActivity : AppCompatActivity() {
             Ingredients(meal.strIngredient19, meal.strMeasure19)
             Ingredients(meal.strIngredient20, meal.strMeasure20)
         }
-        ingredientsAdapter.setIngredientsList(ingredientsList)
     }
 
     private fun setIngredientsRV() {
-            binding.rvIngredients.adapter = ingredientsAdapter
-            binding.rvIngredients.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        ingredientsAdapter.setIngredientsList(ingredientsList)
+        binding.rvIngredients.adapter = ingredientsAdapter
+        binding.rvIngredients.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvIngredients.setHasFixedSize(true)
     }
 
-    private fun onBackArrowClick() {
+    private fun onClick() {
         binding.imgBackArrow.setOnClickListener {
             finish()
+        }
+
+        binding.btnYoutube.setOnClickListener{
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(meal.strYoutube)))
         }
     }
 }

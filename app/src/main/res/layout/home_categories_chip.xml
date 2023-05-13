@@ -18,7 +18,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/regular"
             android:text="Vegan"
-            android:textColor="@color/text_subtitle"
+            android:textColor="@color/text_title"
             android:textSize="14sp" />
 
 </androidx.cardview.widget.CardView>
