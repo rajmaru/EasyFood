@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".MealActivity">
 
     <ImageView
@@ -15,17 +16,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/img_statusbar_gradient"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="-10dp"
-        android:rotation="180"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/card_gradient"/>
 
     <ImageView
         android:id="@+id/img_meal_gradient"
@@ -55,11 +45,11 @@
         android:id="@+id/img_back_arrow"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/round_button_background"
-        android:padding="5dp"
         android:elevation="6dp"
+        android:padding="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_back_arrow"
@@ -69,8 +59,8 @@
         android:id="@+id/img_favorite"
         android:layout_width="37dp"
         android:layout_height="37dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/round_button_background"
         android:elevation="6dp"
         android:padding="7dp"
@@ -80,6 +70,7 @@
         app:tint="#1A1818" />
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -136,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="14dp"
-                android:layout_marginBottom="85dp"
+                android:layout_marginBottom="90dp"
                 android:alpha="0.8"
                 android:fontFamily="@font/regular"
                 android:text="Instructions"
@@ -150,6 +141,20 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <ImageView
+        android:id="@+id/img_instructions_gradient"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="-10dp"
+        android:layout_marginBottom="-80dp"
+        android:alpha="0.25"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_youtube"
+        app:srcCompat="@drawable/card_gradient" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/btn_youtube"

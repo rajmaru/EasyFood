@@ -108,7 +108,7 @@ class HomeFragment : Fragment() {
 
     //Popular Meals
     private fun getPopularMeals() {
-        viewModel.getPopularMeals("Beef").observe(viewLifecycleOwner, Observer { popularMeals ->
+        viewModel.getPopularMeals("Breakfast").observe(viewLifecycleOwner, Observer { popularMeals ->
             if (popularMeals != null) {
                 popularMealsAdapter.setPopularMealsList(
                     this.requireContext(),

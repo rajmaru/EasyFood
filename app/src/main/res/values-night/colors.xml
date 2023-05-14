@@ -13,6 +13,9 @@
     <color name="card_title">#EEE9E9</color>
 
     <color name="statusBar">#1F2C34</color>
+    <color name="navBar">#0B141B</color>
+    <color name="mealactivitystatusBar">#1F2C34</color>
+    <color name="mealactivitynavbarcolor">#0B141B</color>
 
     <color name="toolbar_color">#1F2C34</color>
     <color name="onToolbar">#F4F4F4</color>

@@ -17,6 +17,8 @@
         <activity
             android:name=".MealActivity"
             android:exported="false"
+            android:screenOrientation="nosensor"
+            android:theme="@style/Theme.MealActivity"
             android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".MainActivity"

@@ -36,14 +36,6 @@ class MealActivity : AppCompatActivity() {
         binding = ActivityMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        getWindow().setStatusBarColor(Color.TRANSPARENT)
-        // this lines ensure only the status-bar to become transparent without affecting the nav-bar
-        // this lines ensure only the status-bar to become transparent without affecting the nav-bar
-        window.decorView.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-
         viewModel = ViewModelProvider(this)[ApiViewModel::class.java]
         ingredientsAdapter = IngredientsAdapter()
 
