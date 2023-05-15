@@ -1,17 +1,23 @@
 package com.one.easyfood.adapters
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.one.easyfood.MealListActivity
 import com.one.easyfood.databinding.CategoriesListItemBinding
 import com.one.easyfood.models.Category
+import java.net.ConnectException
 
 class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.CategoriesViewHolder>() {
 
+    private lateinit var context: Context
     private var categories= ArrayList<Category>()
 
-    fun setCategoriesList(categories: ArrayList<Category>) {
+    fun setCategoriesList(context: Context, categories: ArrayList<Category>) {
+       this.context = context
         this.categories = categories
         notifyDataSetChanged()
     }
@@ -28,6 +34,11 @@ class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.CategoriesViewH
         Glide.with(holder.itemView)
             .load(categories[position].strCategoryThumb)
             .into(holder.binding.imgCategory)
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, MealListActivity::class.java)
+            intent.putExtra("CATEGORY_NAME", categories[position].strCategory)
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {

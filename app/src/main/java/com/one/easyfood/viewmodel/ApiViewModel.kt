@@ -14,6 +14,7 @@ class ApiViewModel : ViewModel() {
     private lateinit var categories: LiveData<CategoryList?>
     private lateinit var popularMeals: LiveData<MealsList?>
     private lateinit var recommendedMeals: LiveData<MealsList?>
+    private lateinit var mealsByCategory: LiveData<MealsList?>
     private lateinit var mealById: LiveData<Meal?>
 
 
@@ -40,6 +41,11 @@ class ApiViewModel : ViewModel() {
     fun getMealById(mealId: String): LiveData<Meal?> {
         mealById = repository.getMealsById(mealId)
         return mealById
+    }
+
+    fun getMealsByCategory(categoryName: String): LiveData<MealsList?> {
+        mealsByCategory = repository.getMealsByCategory(categoryName)
+        return mealsByCategory
     }
 
 }

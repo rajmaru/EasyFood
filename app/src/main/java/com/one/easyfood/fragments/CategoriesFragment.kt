@@ -41,7 +41,7 @@ class CategoriesFragment : Fragment() {
     private fun getCategories() {
         viewModel.getCategories().observe(viewLifecycleOwner, Observer { categories ->
             if (categories != null) {
-                categoriesAdapter.setCategoriesList(categories = categories.categories as ArrayList<Category>)
+                categoriesAdapter.setCategoriesList(this.requireContext(), categories.categories as ArrayList<Category>)
             }
         })
     }

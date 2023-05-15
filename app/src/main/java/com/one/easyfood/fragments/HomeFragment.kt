@@ -52,11 +52,11 @@ class HomeFragment : Fragment() {
         getPopularMeals()
         getRecommended()
 
-        onClick()
-
         setCategoriesChipRV()
         setPopularMealsRV()
         setRecommendedRV()
+
+        onClick()
     }
 
     private fun onRefresh() {
@@ -70,7 +70,7 @@ class HomeFragment : Fragment() {
 
     private fun onClick() {
         binding.cardRandomMeal.setOnClickListener {
-            var intent = Intent(this.activity, MealActivity::class.java)
+            val intent = Intent(this.activity, MealActivity::class.java)
             intent.putExtra("MEAL_ID", randomMeal.idMeal)
             startActivity(intent)
         }
@@ -94,7 +94,7 @@ class HomeFragment : Fragment() {
     private fun getCategories() {
         viewModel.getCategories().observe(viewLifecycleOwner, Observer { categoriesList ->
             if (categoriesList != null) {
-                categoriesChipAdapter.setCategoryList(categories = categoriesList.categories as ArrayList<Category>)
+                categoriesChipAdapter.setCategoryList(this.requireContext(), categoriesList.categories as ArrayList<Category>)
             }
         })
     }
