@@ -7,67 +7,82 @@
     android:background="@color/background"
     tools:context=".MealActivity">
 
-    <ImageView
-        android:id="@+id/img_meal"
-        android:layout_width="0dp"
-        android:layout_height="290dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/img_meal_gradient"
-        android:layout_width="0dp"
-        android:layout_height="130dp"
-        app:layout_constraintBottom_toBottomOf="@+id/img_meal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/card_gradient" />
-
-    <TextView
-        android:id="@+id/tv_meal_name"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/meal_activity_toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="16dp"
-        android:fontFamily="@font/bold"
-        android:text=""
-        android:textColor="@color/card_title"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/img_meal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/img_back_arrow"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/round_button_background"
-        android:elevation="6dp"
-        android:padding="5dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_back_arrow"
-        app:tint="#1A1818" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <ImageView
-        android:id="@+id/img_favorite"
-        android:layout_width="37dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/round_button_background"
-        android:elevation="6dp"
-        android:padding="7dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_favorite"
-        app:tint="#1A1818" />
+        <ImageView
+            android:id="@+id/img_meal"
+            android:layout_width="0dp"
+            android:layout_height="290dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_meal_gradient"
+            android:layout_width="0dp"
+            android:layout_height="140dp"
+            android:alpha="0.6"
+            app:layout_constraintBottom_toBottomOf="@+id/img_meal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/card_gradient" />
+
+        <TextView
+            android:id="@+id/tv_meal_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/bold"
+            android:shadowColor="@color/black"
+            android:shadowRadius="2"
+            android:text=""
+            android:textColor="@color/card_title"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_meal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/meal_activity_favorite"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/round_button_background"
+            android:elevation="6dp"
+            android:padding="7dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_favorite"
+            app:tint="#1A1818" />
+
+        <ImageView
+            android:id="@+id/meal_activity_back_arrow"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/round_button_background"
+            android:elevation="6dp"
+            android:padding="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_back_arrow"
+            app:tint="#1A1818" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
@@ -76,7 +91,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_meal">
+        app:layout_constraintTop_toBottomOf="@+id/meal_activity_toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -92,7 +107,7 @@
                 android:fontFamily="@font/regular"
                 android:text="Ingredients"
                 android:textColor="@color/text_title"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -117,7 +132,7 @@
                 android:fontFamily="@font/regular"
                 android:text="Instructions"
                 android:textColor="@color/text_title"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv_ingredients" />
@@ -132,7 +147,7 @@
                 android:fontFamily="@font/regular"
                 android:text="Instructions"
                 android:textColor="@color/text_subtitle"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView2"

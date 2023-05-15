@@ -16,7 +16,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="14dp"
             android:layout_marginBottom="8dp"
-            android:alpha="0.9"
+            android:alpha="0.95"
             android:fontFamily="@font/regular"
             android:text="Vegan"
             android:textColor="@color/text_title"

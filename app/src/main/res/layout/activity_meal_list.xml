@@ -8,30 +8,62 @@
     tools:context=".MealListActivity">
 
 
-    <TextView
-        android:id="@+id/tv_meallist_total"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/meallist_toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/toolbar_color"
-        android:fontFamily="@font/regular"
-        android:gravity="center"
-        android:padding="12dp"
-        android:text="Total : 34"
-        android:textColor="@color/onToolbar"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_meallist_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/toolbar_color"
+            android:fontFamily="@font/regular"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:paddingBottom="10dp"
+            android:text="Total : 0"
+            android:textColor="@color/onToolbar"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/meallist_activity_back_arrow"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/round_button_background"
+            android:elevation="6dp"
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_back_arrow"
+            app:tint="#1A1818" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_meallist"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_meallist_total" />
+        app:layout_constraintTop_toBottomOf="@+id/meallist_toolbar" />
 
 
     <!--  <com.google.android.material.appbar.AppBarLayout

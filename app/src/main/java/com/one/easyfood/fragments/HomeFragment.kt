@@ -126,7 +126,7 @@ class HomeFragment : Fragment() {
 
     //Recommended Meals
     private fun getRecommended() {
-        viewModel.getRecommendedMeals("Vegetarian")
+        viewModel.getRecommendedMeals("Side")
             .observe(viewLifecycleOwner, Observer { recommendedList ->
                 if (recommendedList != null) {
                     recommendedAdapter.setRecommendedList(

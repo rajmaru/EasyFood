@@ -24,7 +24,7 @@
                     android:fontFamily="@font/regular"
                     android:text="1/4 cup"
                     android:textColor="@color/text_title"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -42,7 +42,7 @@
                     android:fontFamily="@font/regular"
                     android:text="water"
                     android:textColor="@color/text_title"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tv_ingredients_size"

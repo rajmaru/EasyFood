@@ -3,6 +3,7 @@ package com.one.easyfood
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Color
+import android.hardware.biometrics.BiometricManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -23,6 +24,8 @@ import com.one.easyfood.databinding.ActivityMealBinding
 import com.one.easyfood.models.Ingredients
 import com.one.easyfood.models.Meal
 import com.one.easyfood.viewmodel.ApiViewModel
+import java.util.Collections
+import java.util.Objects
 
 
 class MealActivity : AppCompatActivity() {
@@ -90,6 +93,14 @@ class MealActivity : AppCompatActivity() {
             add(Ingredients(meal.strIngredient18, meal.strMeasure18))
             add(Ingredients(meal.strIngredient19, meal.strMeasure19))
             add(Ingredients(meal.strIngredient20, meal.strMeasure20))
+
+        }
+        val itr = ingredientsList.iterator()
+        while(itr.hasNext()){
+            val curr = itr.next()
+            if(curr.name.isNullOrBlank() && curr.size.isNullOrBlank()){
+                itr.remove()
+            }
         }
         setIngredientsRV(ingredientsList)
     }
@@ -104,7 +115,7 @@ class MealActivity : AppCompatActivity() {
     }
 
     private fun onClick() {
-        binding.imgBackArrow.setOnClickListener {
+        binding.mealActivityBackArrow.setOnClickListener {
             finish()
         }
 
