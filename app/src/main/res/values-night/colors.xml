@@ -5,20 +5,22 @@
 
     <color name="theme">#00A884</color>
 
+    <color name="toolbar_color">#1F2C34</color>
+    <color name="onToolbar">#F4F4F4</color>
+
     <color name="background">#121B22</color>
     <color name="surface">#1F2C34</color>
 
-    <color name="text_title">#F9F9F9</color>
+    <color name="text_title">#F4F4F4</color>
     <color name="text_subtitle">#AFBDC3</color>
-    <color name="card_title">#FFFFFF</color>
+    <color name="card_title">#F4F4F4</color>
 
     <color name="statusBar">#1F2C34</color>
     <color name="navBar">#0B141B</color>
     <color name="mealactivitystatusBar">#1F2C34</color>
     <color name="mealactivitynavbarcolor">#0B141B</color>
 
-    <color name="toolbar_color">#1F2C34</color>
-    <color name="onToolbar">#F4F4F4</color>
+    <color name="instructionsgradientcolor">#0B141B</color>
 
     <color name="btm_nav_color_checked">#00A884</color>
     <color name="btm_nav_color_unchecked">#85969E</color>

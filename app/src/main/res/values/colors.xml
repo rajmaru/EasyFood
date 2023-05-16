@@ -5,10 +5,13 @@
 
     <color name="theme">#008069</color>
 
-    <color name="background">#F4F4F4</color>
+    <color name="toolbar_color">#008069</color>
+    <color name="onToolbar">#FFFFFF</color>
+
+    <color name="background">#F9F9F9</color>
     <color name="surface">#FFFFFF</color>
 
-    <color name="text_title">#101010</color>
+    <color name="text_title">#FF000000</color>
     <color name="text_subtitle">#374146</color>
     <color name="card_title">#FFFFFF</color>
 
@@ -17,8 +20,7 @@
     <color name="mealactivitystatusBar">#FFFFFF</color>
     <color name="mealactivitynavbarcolor">#FFFFFF</color>
 
-    <color name="toolbar_color">#008069</color>
-    <color name="onToolbar">#FFFFFF</color>
+    <color name="instructionsgradientcolor">#FFFFFF</color>
 
     <color name="btm_nav_color_checked">#01A588</color>
     <color name="btm_nav_color_unchecked">#CACACA</color>

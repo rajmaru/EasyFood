@@ -55,7 +55,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
-            android:id="@+id/meal_activity_favorite"
+            android:id="@+id/meal_favorite_btn"
             android:layout_width="37dp"
             android:layout_height="37dp"
             android:layout_marginTop="20dp"
@@ -69,7 +69,7 @@
             app:tint="#1A1818" />
 
         <ImageView
-            android:id="@+id/meal_activity_back_arrow"
+            android:id="@+id/meal_back_btn"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginStart="20dp"
@@ -161,15 +161,13 @@
         android:id="@+id/img_instructions_gradient"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="-10dp"
-        android:layout_marginBottom="-80dp"
-        android:alpha="0.25"
+        android:layout_marginTop="-20dp"
+        android:src="@drawable/instructions_card_gradient"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btn_youtube"
-        app:srcCompat="@drawable/card_gradient" />
+        app:layout_constraintTop_toTopOf="@+id/btn_youtube" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/btn_youtube"

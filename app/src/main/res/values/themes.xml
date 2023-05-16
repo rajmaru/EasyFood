@@ -34,7 +34,4 @@
         <item name="android:navigationBarColor">@color/mealactivitynavbarcolor</item>
     </style>
 
-    <style name="BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
-        <item name="itemIconTint">@color/btm_nav_icon_color</item>
-    </style>
 </resources>

@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.util.StringBuilderPrinter
 import android.view.View
 import android.view.Window
 import android.view.WindowInsetsController
@@ -115,7 +116,7 @@ class MealActivity : AppCompatActivity() {
     }
 
     private fun onClick() {
-        binding.mealActivityBackArrow.setOnClickListener {
+        binding.mealBackBtn.setOnClickListener {
             finish()
         }
 

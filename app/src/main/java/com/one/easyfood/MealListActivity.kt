@@ -22,7 +22,6 @@ class MealListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMealListBinding
     private lateinit var viewModel: ApiViewModel
     private lateinit var mealListAdapter: MealListAdapter
-    private lateinit var categoryName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,31 +32,16 @@ class MealListActivity : AppCompatActivity() {
         mealListAdapter = MealListAdapter()
 
         getCategoryName()
-        getMealList()
+
+        onClick()
     }
 
     private fun getCategoryName() {
-        categoryName = intent.getStringExtra("CATEGORY_NAME").toString()
+        val categoryName= intent.getStringExtra("CATEGORY_NAME").toString()
+        getMealList(categoryName)
     }
 
-    private fun getMealList() {
-        RetrofitRequest.apiRequest.getMealsByCategory(categoryName)
-            .enqueue(object : Callback<MealsList?> {
-                override fun onResponse(
-                    call: retrofit2.Call<MealsList?>,
-                    response: Response<MealsList?>
-                ) {
-                    if (response.body() != null) {
-
-                    }
-                }
-
-                override fun onFailure(call: retrofit2.Call<MealsList?>, t: Throwable) {
-                    TODO("Not yet implemented")
-                }
-
-            })
-
+    private fun getMealList(categoryName: String) {
         viewModel.getMealsByCategory(categoryName).observe(this, Observer { mealsList ->
             if (mealsList != null) {
                 setMealListRV(mealsList.meals as ArrayList<Meal>)
@@ -72,6 +56,12 @@ class MealListActivity : AppCompatActivity() {
         binding.rvMeallist.apply {
             adapter = mealListAdapter
             layoutManager = GridLayoutManager(this@MealListActivity, 2)
+        }
+    }
+
+    private fun onClick() {
+        binding.meallistBackBtn.setOnClickListener {
+            finish()
         }
     }
 }
