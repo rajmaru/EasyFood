@@ -37,7 +37,7 @@ class MealListAdapter: RecyclerView.Adapter<MealListAdapter.MealListViewHolder>(
     }
 
     override fun getItemCount(): Int {
-        return meals.count()
+        return meals.size
     }
 
     inner class MealListViewHolder(val binding: MealCardBinding): RecyclerView.ViewHolder(binding.root)

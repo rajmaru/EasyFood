@@ -32,8 +32,6 @@ class MealListActivity : AppCompatActivity() {
         mealListAdapter = MealListAdapter()
 
         getCategoryName()
-
-        onClick()
     }
 
     private fun getCategoryName() {
@@ -59,9 +57,4 @@ class MealListActivity : AppCompatActivity() {
         }
     }
 
-    private fun onClick() {
-        binding.meallistBackBtn.setOnClickListener {
-            finish()
-        }
-    }
 }

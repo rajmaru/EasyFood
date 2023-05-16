@@ -42,7 +42,7 @@ class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.CategoriesViewH
     }
 
     override fun getItemCount(): Int {
-        return categories.count()
+        return categories.size
     }
 
     inner class CategoriesViewHolder(val binding: CategoriesListItemBinding) :

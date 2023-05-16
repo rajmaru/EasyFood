@@ -34,7 +34,7 @@ class CategoriesChipAdapter: RecyclerView.Adapter<CategoriesChipAdapter.Categori
     }
 
     override fun getItemCount(): Int {
-        return categories.count()
+        return categories.size
     }
 
     inner class CategoriesChipViewHolder(val binding: HomeCategoriesChipBinding): RecyclerView.ViewHolder(binding.root)

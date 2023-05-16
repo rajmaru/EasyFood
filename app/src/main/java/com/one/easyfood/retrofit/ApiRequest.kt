@@ -20,4 +20,7 @@ interface ApiRequest {
 
     @GET("lookup.php")
     fun getMealsById(@Query("i") mealId: String): Call<MealsList>
+
+    @GET("search.php")
+    fun searchMeals(@Query("s") mealName: String): Call<MealsList>
 }

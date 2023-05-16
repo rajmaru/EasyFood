@@ -19,7 +19,7 @@ class ApiRepository {
     private var recommendedMeals = MutableLiveData<MealsList?>()
     private var mealById = MutableLiveData<Meal?>()
     private var mealsByCategory = MutableLiveData<MealsList?>()
-
+    private var searchedMeals = MutableLiveData<MealsList?>()
 
     fun getRandomMeal(): LiveData<Meal?> {
         RetrofitRequest.apiRequest.getRandomMeal().enqueue(object : Callback<MealsList> {
@@ -114,6 +114,22 @@ class ApiRepository {
                 }
             })
         return mealsByCategory
+    }
+
+    fun searchMeals(mealName: String): LiveData<MealsList?> {
+        RetrofitRequest.apiRequest.searchMeals(mealName)
+            .enqueue(object : Callback<MealsList> {
+                override fun onResponse(call: Call<MealsList>, response: Response<MealsList>) {
+                    if (response.body() != null) {
+                        searchedMeals.value = response.body()
+                    }
+                }
+
+                override fun onFailure(call: Call<MealsList>, t: Throwable) {
+                    Log.d("SearchMeals Repo", t.message.toString())
+                }
+            })
+        return searchedMeals
     }
 
 }

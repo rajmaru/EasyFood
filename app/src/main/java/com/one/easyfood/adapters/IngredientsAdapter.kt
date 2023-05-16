@@ -25,7 +25,7 @@ class IngredientsAdapter : RecyclerView.Adapter<IngredientsAdapter.IngredientsVi
     }
 
     override fun getItemCount(): Int {
-        return ingredients.count()
+        return ingredients.size
     }
 
     inner class IngredientsViewHolder(val binding: IngredientsChipBinding) :

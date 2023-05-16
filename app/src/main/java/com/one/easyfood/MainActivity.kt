@@ -1,5 +1,6 @@
 package com.one.easyfood
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -21,5 +22,13 @@ class MainActivity : AppCompatActivity() {
         //Bottom Navigation
         val navController = Navigation.findNavController(this, R.id.host_fragment)
         NavigationUI.setupWithNavController(binding.btmNav, navController)
+
+        onClick()
+    }
+
+    private fun onClick() {
+        binding.mainSearchBtn.setOnClickListener{
+            startActivity(Intent(this, SearchActivity::class.java))
+        }
     }
 }

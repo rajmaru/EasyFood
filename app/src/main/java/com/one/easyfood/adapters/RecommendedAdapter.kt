@@ -40,7 +40,7 @@ class RecommendedAdapter: RecyclerView.Adapter<RecommendedAdapter.RecommendedVie
     }
 
     override fun getItemCount(): Int {
-        return recommendedList.count()
+        return recommendedList.size
     }
 
     inner class RecommendedViewHolder(val binding: MealCardBinding) :

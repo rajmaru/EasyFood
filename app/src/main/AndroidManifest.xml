@@ -15,6 +15,9 @@
         android:theme="@style/Theme.EasyFood"
         tools:targetApi="31">
         <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".MealListActivity"
             android:exported="false" />
         <activity

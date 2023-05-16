@@ -40,7 +40,7 @@ class PopularMealsAdapter : RecyclerView.Adapter<PopularMealsAdapter.PopularMeal
     }
 
     override fun getItemCount(): Int {
-        return popularMealsList.count()
+        return popularMealsList.size
     }
 
     inner class PopularMealsViewHolder(val binding: MealCardRectBinding) :
