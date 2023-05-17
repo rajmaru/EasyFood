@@ -14,6 +14,7 @@
     <color name="text_title">#FF000000</color>
     <color name="text_subtitle">#374146</color>
     <color name="card_title">#FFFFFF</color>
+    <color name="search_here">#94F4F4F4</color>
 
     <color name="statusBar">#008069</color>
     <color name="navBar">#F7F8FA</color>

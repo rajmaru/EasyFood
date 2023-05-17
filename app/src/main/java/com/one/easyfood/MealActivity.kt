@@ -24,6 +24,7 @@ import com.one.easyfood.adapters.IngredientsAdapter
 import com.one.easyfood.databinding.ActivityMealBinding
 import com.one.easyfood.models.Ingredients
 import com.one.easyfood.models.Meal
+import com.one.easyfood.models.MealYoutubeLink
 import com.one.easyfood.viewmodel.ApiViewModel
 import java.util.Collections
 import java.util.Objects
@@ -56,7 +57,14 @@ class MealActivity : AppCompatActivity() {
     private fun getMealDataById(mealId: String) {
         viewModel.getMealById(mealId).observe(this, Observer { mealResponse ->
             if (mealResponse != null) {
-                youtubeLink = mealResponse.strYoutube
+                if (!mealResponse.strYoutube.isNullOrEmpty()) {
+                    youtubeLink = mealResponse.strYoutube
+                } else {
+                    val str = Regex("[^A-Za-z0-9]").replace(mealResponse.strMeal, "")
+                    if (MealYoutubeLink.isInEnum(str)) {
+                        youtubeLink = MealYoutubeLink.valueOf(str).strYoutube
+                    }
+                }
                 setDataInViews(mealResponse)
                 getIngredientsList(mealResponse)
             }
@@ -68,8 +76,12 @@ class MealActivity : AppCompatActivity() {
         Glide.with(this@MealActivity)
             .load(meal.strMealThumb)
             .into(binding.imgMeal)
+        meal.strInstructions = meal.strInstructions.replace("\r\n", "\r\n\r\n")
         binding.tvInstructions.text = meal.strInstructions
     }
+
+    private fun String.addCharAtIndex(char: Char, index: Int) =
+        StringBuilder(this).apply { insert(index, char) }.toString()
 
     private fun getIngredientsList(meal: Meal) {
         val ingredientsList = ArrayList<Ingredients>()
@@ -97,9 +109,9 @@ class MealActivity : AppCompatActivity() {
 
         }
         val itr = ingredientsList.iterator()
-        while(itr.hasNext()){
+        while (itr.hasNext()) {
             val curr = itr.next()
-            if(curr.name.isNullOrBlank() && curr.size.isNullOrBlank()){
+            if (curr.name.isNullOrBlank() && curr.size.isNullOrBlank()) {
                 itr.remove()
             }
         }

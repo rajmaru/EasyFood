@@ -22,6 +22,8 @@ class SearchActivity : AppCompatActivity() {
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.searchMealTv.requestFocus()
+
         viewModel = ApiViewModel()
         searchedMealAdapter = SearchedMealAdapter()
 
