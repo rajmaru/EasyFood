@@ -76,7 +76,14 @@ class MealActivity : AppCompatActivity() {
         Glide.with(this@MealActivity)
             .load(meal.strMealThumb)
             .into(binding.imgMeal)
-        meal.strInstructions = meal.strInstructions.replace("\r\n", "\r\n\r\n")
+        if(meal.strInstructions.elementAt(0) == '.'){
+            Log.d("REMOVE_DOT", meal.strInstructions.elementAt(0).toString())
+            meal.strInstructions = meal.strInstructions.addCharAtIndex('1',0)
+        }
+        if(!meal.strInstructions.contains("\r\n\r\n")){
+            meal.strInstructions = meal.strInstructions.replace(".\r\n", "\r\n\r\n")
+        }
+        meal.strInstructions = meal.strInstructions.trim()
         binding.tvInstructions.text = meal.strInstructions
     }
 
