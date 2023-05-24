@@ -2,25 +2,19 @@ package com.one.easyfood
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.telecom.Call
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.one.easyfood.adapters.MealListAdapter
 import com.one.easyfood.databinding.ActivityMealListBinding
 import com.one.easyfood.models.Meal
-import com.one.easyfood.models.MealsList
-import com.one.easyfood.retrofit.RetrofitRequest
-import com.one.easyfood.viewmodel.ApiViewModel
-import retrofit2.Callback
-import retrofit2.Response
+import com.one.easyfood.viewmodel.MealsViewModel
+import com.one.easyfood.viewmodel.MealsViewModelFactory
 
 class MealListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMealListBinding
-    private lateinit var viewModel: ApiViewModel
+    private lateinit var viewModel: MealsViewModel
     private lateinit var mealListAdapter: MealListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +22,7 @@ class MealListActivity : AppCompatActivity() {
         binding = ActivityMealListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this)[ApiViewModel::class.java]
+        viewModel = ViewModelProvider(this, MealsViewModelFactory(this))[MealsViewModel::class.java]
         mealListAdapter = MealListAdapter()
 
         getCategoryName()

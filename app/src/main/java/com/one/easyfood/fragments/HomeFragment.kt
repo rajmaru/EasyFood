@@ -17,11 +17,12 @@ import com.one.easyfood.adapters.RecommendedAdapter
 import com.one.easyfood.databinding.FragmentHomeBinding
 import com.one.easyfood.models.Category
 import com.one.easyfood.models.Meal
-import com.one.easyfood.viewmodel.ApiViewModel
+import com.one.easyfood.viewmodel.MealsViewModel
+import com.one.easyfood.viewmodel.MealsViewModelFactory
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var viewModel: ApiViewModel
+    private lateinit var viewModel: MealsViewModel
     private lateinit var categoriesChipAdapter: CategoriesChipAdapter
     private lateinit var popularMealsAdapter: PopularMealsAdapter
     private lateinit var recommendedAdapter: RecommendedAdapter
@@ -30,7 +31,7 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[ApiViewModel::class.java]
+        viewModel = ViewModelProvider(this, MealsViewModelFactory(this.requireContext()))[MealsViewModel::class.java]
         categoriesChipAdapter = CategoriesChipAdapter()
         popularMealsAdapter = PopularMealsAdapter()
         recommendedAdapter = RecommendedAdapter()

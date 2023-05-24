@@ -11,19 +11,20 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.one.easyfood.adapters.CategoriesAdapter
 import com.one.easyfood.databinding.FragmentCategoriesBinding
 import com.one.easyfood.models.Category
-import com.one.easyfood.viewmodel.ApiViewModel
+import com.one.easyfood.viewmodel.MealsViewModel
+import com.one.easyfood.viewmodel.MealsViewModelFactory
 
 class CategoriesFragment : Fragment() {
     private lateinit var binding: FragmentCategoriesBinding
-    private lateinit var viewModel: ApiViewModel
+    private lateinit var viewModel: MealsViewModel
     private lateinit var categoriesAdapter: CategoriesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[ApiViewModel::class.java]
+        viewModel = ViewModelProvider(this, MealsViewModelFactory(this.requireContext()))[MealsViewModel::class.java]
         categoriesAdapter = CategoriesAdapter()
     }
-
+ 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

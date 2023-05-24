@@ -1,15 +1,16 @@
 package com.one.easyfood.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.one.easyfood.models.CategoryList
 import com.one.easyfood.models.Meal
 import com.one.easyfood.models.MealsList
-import com.one.easyfood.repository.ApiRepository
+import com.one.easyfood.repository.MealsRepository
 
-class ApiViewModel : ViewModel() {
+class MealsViewModel(context: Context) : ViewModel() {
 
-    private var repository: ApiRepository = ApiRepository()
+    private var repository: MealsRepository = MealsRepository(context)
     private lateinit var randomMeal: LiveData<Meal?>
     private lateinit var categories: LiveData<CategoryList?>
     private lateinit var popularMeals: LiveData<MealsList?>
@@ -53,5 +54,14 @@ class ApiViewModel : ViewModel() {
         searchedMeals = repository.searchMeals(mealName)
         return searchedMeals
     }
+
+    fun saveMeal(meal: Meal) {
+        repository.saveMeal(meal)
+    }
+
+    fun deleteMeal(meal: Meal) {
+        repository.deleteMeal(meal)
+    }
+
 
 }

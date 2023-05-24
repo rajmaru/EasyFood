@@ -1,6 +1,6 @@
 package com.one.easyfood.models
 
-enum class MealYoutubeLink(val strYoutube: String) {
+enum class MealsYoutubeLinks(val strYoutube: String) {
     HomemadeMandazi("https://youtu.be/fHe4YjLv-7A");
 
     companion object {

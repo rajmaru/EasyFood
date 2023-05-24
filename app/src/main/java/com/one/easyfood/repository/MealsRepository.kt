@@ -1,8 +1,10 @@
 package com.one.easyfood.repository
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.one.easyfood.db.MealsDatabase
 import com.one.easyfood.models.CategoryList
 import com.one.easyfood.models.Meal
 import com.one.easyfood.models.MealsList
@@ -11,7 +13,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ApiRepository {
+class MealsRepository(context: Context) {
 
     private var randomMeal = MutableLiveData<Meal?>()
     private var categories = MutableLiveData<CategoryList?>()
@@ -20,6 +22,7 @@ class ApiRepository {
     private var mealById = MutableLiveData<Meal?>()
     private var mealsByCategory = MutableLiveData<MealsList?>()
     private var searchedMeals = MutableLiveData<MealsList?>()
+    private val mealsDB = MealsDatabase.getInstance(context).mealsDao
 
     fun getRandomMeal(): LiveData<Meal?> {
         RetrofitRequest.apiRequest.getRandomMeal().enqueue(object : Callback<MealsList> {
@@ -132,4 +135,11 @@ class ApiRepository {
         return searchedMeals
     }
 
+    fun saveMeal(meal: Meal){
+        mealsDB.upsert(meal)
+    }
+
+    fun deleteMeal(meal: Meal){
+        mealsDB.delete(meal)
+    }
 }

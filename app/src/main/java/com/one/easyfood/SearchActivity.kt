@@ -5,16 +5,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.one.easyfood.adapters.SearchedMealAdapter
 import com.one.easyfood.databinding.ActivitySearchBinding
 import com.one.easyfood.models.Meal
-import com.one.easyfood.viewmodel.ApiViewModel
+import com.one.easyfood.viewmodel.MealsViewModel
+import com.one.easyfood.viewmodel.MealsViewModelFactory
 
 class SearchActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySearchBinding
-    private lateinit var viewModel: ApiViewModel
+    private lateinit var viewModel: MealsViewModel
     private lateinit var searchedMealAdapter: SearchedMealAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +25,7 @@ class SearchActivity : AppCompatActivity() {
 
         binding.searchMealTv.requestFocus()
 
-        viewModel = ApiViewModel()
+        viewModel = ViewModelProvider(this, MealsViewModelFactory(this))[MealsViewModel::class.java]
         searchedMealAdapter = SearchedMealAdapter()
 
         getSearchedMeal()
