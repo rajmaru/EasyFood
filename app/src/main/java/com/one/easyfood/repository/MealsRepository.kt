@@ -9,6 +9,8 @@ import com.one.easyfood.models.CategoryList
 import com.one.easyfood.models.Meal
 import com.one.easyfood.models.MealsList
 import com.one.easyfood.retrofit.RetrofitRequest
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -135,11 +137,15 @@ class MealsRepository(context: Context) {
         return searchedMeals
     }
 
-    fun saveMeal(meal: Meal){
-        mealsDB.upsert(meal)
+    suspend fun saveMeal(meal: Meal){
+        withContext(Dispatchers.IO) {
+            mealsDB.upsert(meal)
+        }
     }
 
-    fun deleteMeal(meal: Meal){
-        mealsDB.delete(meal)
+    suspend fun deleteMeal(meal: Meal){
+        withContext(Dispatchers.IO) {
+            mealsDB.delete(meal)
+        }
     }
 }

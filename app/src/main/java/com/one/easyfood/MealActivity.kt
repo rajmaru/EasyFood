@@ -9,6 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.one.easyfood.adapters.IngredientsAdapter
 import com.one.easyfood.databinding.ActivityMealBinding
 import com.one.easyfood.models.Ingredients
@@ -63,9 +65,18 @@ class MealActivity : AppCompatActivity() {
     }
 
     private fun setDataInViews() {
+
+
+        // The cross-fade transition
+        val factory = DrawableCrossFadeFactory.Builder()
+            .setCrossFadeEnabled(true)
+            .build()
+
+
         binding.tvMealName.text = meal!!.strMeal
         Glide.with(this@MealActivity)
             .load(meal!!.strMealThumb)
+            .transition(DrawableTransitionOptions.withCrossFade(factory))
             .into(binding.imgMeal)
         if(meal!!.strInstructions?.elementAt(0) == '.'){
             Log.d("REMOVE_DOT", meal!!.strInstructions!!.elementAt(0).toString())

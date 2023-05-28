@@ -3,10 +3,12 @@ package com.one.easyfood.viewmodel
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.one.easyfood.models.CategoryList
 import com.one.easyfood.models.Meal
 import com.one.easyfood.models.MealsList
 import com.one.easyfood.repository.MealsRepository
+import kotlinx.coroutines.launch
 
 class MealsViewModel(context: Context) : ViewModel() {
 
@@ -56,11 +58,15 @@ class MealsViewModel(context: Context) : ViewModel() {
     }
 
     fun saveMeal(meal: Meal) {
-        repository.saveMeal(meal)
+        viewModelScope.launch {
+            repository.saveMeal(meal)
+        }
     }
 
-    fun deleteMeal(meal: Meal) {
-        repository.deleteMeal(meal)
+    suspend fun deleteMeal(meal: Meal) {
+        viewModelScope.launch {
+            repository.deleteMeal(meal)
+        }
     }
 
 

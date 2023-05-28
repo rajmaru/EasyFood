@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.one.easyfood.MealListActivity
 import com.one.easyfood.databinding.CategoriesListItemBinding
 import com.one.easyfood.models.Category
@@ -14,10 +16,10 @@ import java.net.ConnectException
 class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.CategoriesViewHolder>() {
 
     private lateinit var context: Context
-    private var categories= ArrayList<Category>()
+    private var categories = ArrayList<Category>()
 
     fun setCategoriesList(context: Context, categories: ArrayList<Category>) {
-       this.context = context
+        this.context = context
         this.categories = categories
         notifyDataSetChanged()
     }
@@ -30,9 +32,14 @@ class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.CategoriesViewH
 
 
     override fun onBindViewHolder(holder: CategoriesViewHolder, position: Int) {
+        // The cross-fade transition
+        val factory = DrawableCrossFadeFactory.Builder()
+            .setCrossFadeEnabled(true)
+            .build()
         holder.binding.tvCategory.text = categories[position].strCategory
         Glide.with(holder.itemView)
             .load(categories[position].strCategoryThumb)
+            .transition(DrawableTransitionOptions.withCrossFade(factory))
             .into(holder.binding.imgCategory)
         holder.itemView.setOnClickListener {
             val intent = Intent(context, MealListActivity::class.java)

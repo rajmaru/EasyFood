@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.one.easyfood.MealActivity
 import com.one.easyfood.databinding.MealCardBinding
 import com.one.easyfood.models.Meal
@@ -29,8 +31,12 @@ class RecommendedAdapter: RecyclerView.Adapter<RecommendedAdapter.RecommendedVie
 
 
     override fun onBindViewHolder(holder: RecommendedViewHolder, position: Int) {
+        val factory = DrawableCrossFadeFactory.Builder()
+            .setCrossFadeEnabled(true)
+            .build()
         holder.binding.tvMeal.text = recommendedList[position].strMeal
         Glide.with(holder.itemView).load(recommendedList[position].strMealThumb)
+            .transition(DrawableTransitionOptions.withCrossFade(factory))
             .into(holder.binding.imgMeal)
         holder.itemView.setOnClickListener {
             var intent = Intent(context, MealActivity::class.java)

@@ -10,6 +10,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.one.easyfood.MealActivity
 import com.one.easyfood.adapters.CategoriesChipAdapter
 import com.one.easyfood.adapters.PopularMealsAdapter
@@ -79,11 +81,15 @@ class HomeFragment : Fragment() {
 
     //Random Meal
     private fun getRandomMeal() {
+        val factory = DrawableCrossFadeFactory.Builder()
+            .setCrossFadeEnabled(true)
+            .build()
         viewModel.getRandomMeal().observe(viewLifecycleOwner, Observer { meal ->
             if (meal != null) {
                 randomMeal = meal
                 Glide.with(this@HomeFragment)
                     .load(randomMeal.strMealThumb)
+                    .transition(DrawableTransitionOptions.withCrossFade(factory))
                     .into(binding.imgRandomMeal)
                 binding.tvRandomMeal.text = randomMeal.strMeal
                 binding.refresh.isRefreshing = false
