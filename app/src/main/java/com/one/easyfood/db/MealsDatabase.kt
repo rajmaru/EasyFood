@@ -1,7 +1,6 @@
 package com.one.easyfood.db
 
 import android.content.Context
-import android.text.style.QuoteSpan
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase

@@ -9,46 +9,45 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.one.easyfood.MealActivity
-import com.one.easyfood.databinding.MealCardRectBinding
+import com.one.easyfood.databinding.MealCardBinding
 import com.one.easyfood.models.Meal
 
-class PopularMealsAdapter : RecyclerView.Adapter<PopularMealsAdapter.PopularMealsViewHolder>() {
+class FavoriteMealsAdapter : RecyclerView.Adapter<FavoriteMealsAdapter.FavoriteMealsViewHolder>(){
 
-    private var popularMealsList= ArrayList<Meal>()
+    private lateinit var favMealsList: List<Meal>
     private lateinit var context: Context
 
-    fun setPopularMealsList(context: Context, popularMealsList: ArrayList<Meal>) {
+    fun setFavMealsList(context: Context, favMealsList: List<Meal>){
         this.context = context
-        this.popularMealsList = popularMealsList
+        this.favMealsList = favMealsList
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularMealsViewHolder {
-        return PopularMealsViewHolder(
-            MealCardRectBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteMealsViewHolder {
+        return FavoriteMealsViewHolder(
+            MealCardBinding.inflate(LayoutInflater.from(parent.context), parent , false)
         )
     }
 
-
-    override fun onBindViewHolder(holder: PopularMealsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FavoriteMealsViewHolder, position: Int) {
         val factory = DrawableCrossFadeFactory.Builder()
             .setCrossFadeEnabled(true)
             .build()
-        holder.binding.tvMeal.text = popularMealsList[position].strMeal
-        Glide.with(holder.itemView).load(popularMealsList[position].strMealThumb)
+        holder.binding.tvMeal.text = favMealsList[position].strMeal
+        Glide.with(holder.itemView).load(favMealsList[position].strMealThumb)
             .transition(DrawableTransitionOptions.withCrossFade(factory))
             .into(holder.binding.imgMeal)
         holder.itemView.setOnClickListener {
             val intent = Intent(context, MealActivity::class.java)
-            intent.putExtra("MEAL_ID",popularMealsList[position].idMeal)
+            intent.putExtra("MEAL_ID",favMealsList[position].idMeal)
             context.startActivity(intent)
         }
     }
 
     override fun getItemCount(): Int {
-        return popularMealsList.size
+        return favMealsList.size
     }
 
-    inner class PopularMealsViewHolder(val binding: MealCardRectBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    inner class FavoriteMealsViewHolder(val binding: MealCardBinding): RecyclerView.ViewHolder(binding.root)
+
 }

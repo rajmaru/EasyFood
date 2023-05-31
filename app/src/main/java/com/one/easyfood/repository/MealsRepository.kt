@@ -137,15 +137,15 @@ class MealsRepository(context: Context) {
         return searchedMeals
     }
 
-    suspend fun saveMeal(meal: Meal){
-        withContext(Dispatchers.IO) {
-            mealsDB.upsert(meal)
-        }
+    fun getFavMeals(): LiveData<List<Meal>> {
+        return mealsDB.getFavMeals()
     }
 
-    suspend fun deleteMeal(meal: Meal){
-        withContext(Dispatchers.IO) {
+    fun saveMeal(meal: Meal){
+            mealsDB.upsert(meal)
+    }
+
+    fun deleteMeal(meal: Meal){
             mealsDB.delete(meal)
-        }
     }
 }

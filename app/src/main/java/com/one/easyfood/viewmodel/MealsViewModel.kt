@@ -1,14 +1,18 @@
 package com.one.easyfood.viewmodel
 
 import android.content.Context
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.one.easyfood.models.CategoryList
 import com.one.easyfood.models.Meal
 import com.one.easyfood.models.MealsList
 import com.one.easyfood.repository.MealsRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MealsViewModel(context: Context) : ViewModel() {
 
@@ -20,6 +24,7 @@ class MealsViewModel(context: Context) : ViewModel() {
     private lateinit var mealsByCategory: LiveData<MealsList?>
     private lateinit var searchedMeals: LiveData<MealsList?>
     private lateinit var mealById: LiveData<Meal?>
+    private lateinit var favMeals: List<Meal>
 
 
     fun getRandomMeal(): LiveData<Meal?> {
@@ -57,17 +62,31 @@ class MealsViewModel(context: Context) : ViewModel() {
         return searchedMeals
     }
 
+    fun getFavMeals(viewLifecycleOwner: LifecycleOwner): List<Meal>{
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                repository.getFavMeals().observe(viewLifecycleOwner, Observer {
+                    favMeals = it
+                })
+            }
+        }
+        return favMeals
+    }
+
     fun saveMeal(meal: Meal) {
         viewModelScope.launch {
-            repository.saveMeal(meal)
+            withContext(Dispatchers.IO) {
+                repository.saveMeal(meal)
+            }
         }
     }
 
     suspend fun deleteMeal(meal: Meal) {
         viewModelScope.launch {
-            repository.deleteMeal(meal)
+            withContext(Dispatchers.IO) {
+                repository.deleteMeal(meal)
+            }
         }
     }
-
 
 }
