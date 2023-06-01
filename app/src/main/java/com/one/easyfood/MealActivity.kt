@@ -141,7 +141,7 @@ class MealActivity : AppCompatActivity() {
             finish()
         }
         binding.mealFavoriteBtn.setOnClickListener{
-            if(viewModel.isMealExistInFavoritesList(meal?.strMeal)){
+            if(viewModel.isMealExistInFavoritesList(meal?.strMeal) == 1){
                 viewModel.deleteMeal(meal!!)
                 binding.mealFavoriteBtn.setImageResource(R.drawable.ic_favorite)
             }else{

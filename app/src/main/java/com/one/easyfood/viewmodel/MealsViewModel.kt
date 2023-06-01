@@ -22,7 +22,7 @@ class MealsViewModel(context: Context) : ViewModel() {
     private lateinit var mealsByCategory: LiveData<MealsList?>
     private lateinit var searchedMeals: LiveData<MealsList?>
     private lateinit var mealById: LiveData<Meal?>
-    private var isMealExistInFavoritesList = false
+    private var isMealExistInFavoritesList = 0
 
     fun getRandomMeal(): LiveData<Meal?> {
         randomMeal = repository.getRandomMeal()
@@ -79,7 +79,7 @@ class MealsViewModel(context: Context) : ViewModel() {
         }
     }
 
-    fun isMealExistInFavoritesList(idMeal: String?): Boolean {
+    fun isMealExistInFavoritesList(idMeal: String?): Int {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 if (idMeal != null) {

@@ -17,6 +17,7 @@ import com.one.easyfood.adapters.CategoriesChipAdapter
 import com.one.easyfood.adapters.PopularMealsAdapter
 import com.one.easyfood.adapters.RecommendedAdapter
 import com.one.easyfood.databinding.FragmentHomeBinding
+import com.one.easyfood.itemdecoration.CustomItemMargin
 import com.one.easyfood.models.Category
 import com.one.easyfood.models.Meal
 import com.one.easyfood.viewmodel.MealsViewModel
@@ -29,6 +30,7 @@ class HomeFragment : Fragment() {
     private lateinit var popularMealsAdapter: PopularMealsAdapter
     private lateinit var recommendedAdapter: RecommendedAdapter
     private lateinit var randomMeal: Meal
+    private lateinit var customItemMargin: CustomItemMargin
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +39,7 @@ class HomeFragment : Fragment() {
         categoriesChipAdapter = CategoriesChipAdapter()
         popularMealsAdapter = PopularMealsAdapter()
         recommendedAdapter = RecommendedAdapter()
+        customItemMargin = CustomItemMargin()
     }
 
     override fun onCreateView(
@@ -107,9 +110,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun setCategoriesChipRV() {
-        binding.rvHomeCategories.adapter = categoriesChipAdapter
-        binding.rvHomeCategories.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvHomeCategories.apply {
+            addItemDecoration(customItemMargin)
+            adapter = categoriesChipAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
     }
 
 
@@ -126,9 +131,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun setPopularMealsRV() {
-        binding.rvHomePopular.adapter = popularMealsAdapter
-        binding.rvHomePopular.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvHomePopular.apply {
+            addItemDecoration(customItemMargin)
+            adapter = popularMealsAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
     }
 
     //Recommended Meals
@@ -145,8 +152,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun setRecommendedRV() {
-        binding.rvHomeRecommended.adapter = recommendedAdapter
-        binding.rvHomeRecommended.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvHomeRecommended.apply {
+            addItemDecoration(customItemMargin)
+            adapter = recommendedAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
     }
 }
