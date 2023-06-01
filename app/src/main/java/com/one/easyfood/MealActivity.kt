@@ -141,7 +141,13 @@ class MealActivity : AppCompatActivity() {
             finish()
         }
         binding.mealFavoriteBtn.setOnClickListener{
-            viewModel.saveMeal(meal!!)
+            if(viewModel.isMealExistInFavoritesList(meal?.strMeal)){
+                viewModel.deleteMeal(meal!!)
+                binding.mealFavoriteBtn.setImageResource(R.drawable.ic_favorite)
+            }else{
+                viewModel.saveMeal(meal!!)
+                binding.mealFavoriteBtn.setImageResource(R.drawable.ic_favorite_filled)
+            }
         }
 
         binding.btnYoutube.setOnClickListener {

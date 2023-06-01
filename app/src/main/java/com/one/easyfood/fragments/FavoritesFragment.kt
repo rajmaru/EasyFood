@@ -42,7 +42,9 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun getFavMeals() {
-        setFavMealsRV(viewModel.getFavMeals(viewLifecycleOwner))
+        viewModel.getFavMeals().observe(viewLifecycleOwner, Observer {favMeals->
+            setFavMealsRV(favMeals)
+        })
     }
 
     private fun setFavMealsRV(favMeals: List<Meal?>) {

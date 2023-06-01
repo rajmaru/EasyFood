@@ -65,8 +65,7 @@
             android:padding="7dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_favorite"
-            app:tint="#1A1818" />
+            app:srcCompat="@drawable/ic_favorite" />
 
         <ImageView
             android:id="@+id/meal_back_btn"

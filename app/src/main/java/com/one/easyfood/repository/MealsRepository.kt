@@ -148,4 +148,8 @@ class MealsRepository(context: Context) {
     fun deleteMeal(meal: Meal){
             mealsDB.delete(meal)
     }
+
+    fun isMealExistInFavoritesList(idMeal: String): Boolean {
+            return mealsDB.isExist(idMeal)
+    }
 }
