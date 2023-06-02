@@ -2,8 +2,10 @@ package com.one.easyfood
 
 import android.content.Intent
 import android.net.Uri
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +15,8 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.one.easyfood.adapters.IngredientsAdapter
 import com.one.easyfood.databinding.ActivityMealBinding
+import com.one.easyfood.itemdecoration.CustomItemMargin
+import com.one.easyfood.itemdecoration.IngredientsItemMargin
 import com.one.easyfood.models.Ingredients
 import com.one.easyfood.models.Meal
 import com.one.easyfood.models.MealsYoutubeLinks
@@ -27,6 +31,7 @@ class MealActivity : AppCompatActivity() {
     private lateinit var ingredientsAdapter: IngredientsAdapter
     private var mealId: String? = null
     private var meal: Meal? = null
+    private lateinit var customItemMargin: IngredientsItemMargin
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +40,7 @@ class MealActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this, MealsViewModelFactory(this))[MealsViewModel::class.java]
         ingredientsAdapter = IngredientsAdapter()
+        customItemMargin = IngredientsItemMargin()
 
         getMealId()
         onClick()
@@ -58,35 +64,11 @@ class MealActivity : AppCompatActivity() {
                         youtubeLink = MealsYoutubeLinks.valueOf(str).strYoutube
                     }
                 }
+                binding.btnYoutube.visibility = View.VISIBLE
                 setDataInViews()
                 getIngredientsList()
             }
         })
-    }
-
-    private fun setDataInViews() {
-
-
-        // The cross-fade transition
-        val factory = DrawableCrossFadeFactory.Builder()
-            .setCrossFadeEnabled(true)
-            .build()
-
-
-        binding.tvMealName.text = meal!!.strMeal
-        Glide.with(this@MealActivity)
-            .load(meal!!.strMealThumb)
-            .transition(DrawableTransitionOptions.withCrossFade(factory))
-            .into(binding.imgMeal)
-        if(meal!!.strInstructions?.elementAt(0) == '.'){
-            Log.d("REMOVE_DOT", meal!!.strInstructions!!.elementAt(0).toString())
-            meal!!.strInstructions = meal!!.strInstructions!!.addCharAtIndex('1',0)
-        }
-        if(!meal!!.strInstructions?.contains("\r\n\r\n")!!){
-            meal!!.strInstructions = meal!!.strInstructions?.replace(".\r\n", "\r\n\r\n")
-        }
-        meal!!.strInstructions = meal!!.strInstructions?.trim()
-        binding.tvInstructions.text = meal!!.strInstructions
     }
 
     private fun String.addCharAtIndex(char: Char, index: Int) =
@@ -130,10 +112,36 @@ class MealActivity : AppCompatActivity() {
     private fun setIngredientsRV(ingredientsList: ArrayList<Ingredients>) {
         ingredientsAdapter.setIngredientsList(ingredientsList)
         binding.rvIngredients.apply {
+            addItemDecoration(customItemMargin)
             adapter = ingredientsAdapter
             layoutManager =
                 LinearLayoutManager(this@MealActivity, LinearLayoutManager.HORIZONTAL, false)
         }
+        binding.headingIngredients.visibility = View.VISIBLE
+    }
+
+    private fun setDataInViews() {
+        // The cross-fade transition
+        val factory = DrawableCrossFadeFactory.Builder()
+            .setCrossFadeEnabled(true)
+            .build()
+
+        binding.tvMealName.text = meal!!.strMeal
+        Glide.with(this@MealActivity)
+            .load(meal!!.strMealThumb)
+            .transition(DrawableTransitionOptions.withCrossFade(factory))
+            .into(binding.imgMeal)
+        if(meal!!.strInstructions?.elementAt(0) == '.'){
+            Log.d("REMOVE_DOT", meal!!.strInstructions!!.elementAt(0).toString())
+            meal!!.strInstructions = meal!!.strInstructions!!.addCharAtIndex('1',0)
+        }
+        if(!meal!!.strInstructions?.contains("\r\n\r\n")!!){
+            meal!!.strInstructions = meal!!.strInstructions?.replace(".\r\n", "\r\n\r\n")
+        }
+        meal!!.strInstructions = meal!!.strInstructions?.trim()
+        binding.tvInstructions.text = meal!!.strInstructions
+        binding.headingInstructions.visibility = View.VISIBLE
+        binding.tvInstructions.visibility = View.VISIBLE
     }
 
     private fun onClick() {

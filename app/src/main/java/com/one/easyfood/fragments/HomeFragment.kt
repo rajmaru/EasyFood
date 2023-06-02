@@ -19,7 +19,9 @@ import com.one.easyfood.adapters.RecommendedAdapter
 import com.one.easyfood.databinding.FragmentHomeBinding
 import com.one.easyfood.itemdecoration.CustomItemMargin
 import com.one.easyfood.models.Category
+import com.one.easyfood.models.CategoryList
 import com.one.easyfood.models.Meal
+import com.one.easyfood.models.MealsList
 import com.one.easyfood.viewmodel.MealsViewModel
 import com.one.easyfood.viewmodel.MealsViewModelFactory
 
@@ -58,10 +60,6 @@ class HomeFragment : Fragment() {
         getPopularMeals()
         getRecommended()
 
-        setCategoriesChipRV()
-        setPopularMealsRV()
-        setRecommendedRV()
-
         onClick()
     }
 
@@ -95,6 +93,7 @@ class HomeFragment : Fragment() {
                     .transition(DrawableTransitionOptions.withCrossFade(factory))
                     .into(binding.imgRandomMeal)
                 binding.tvRandomMeal.text = randomMeal.strMeal
+                binding.cardRandomMeal.visibility = View.VISIBLE
                 binding.refresh.isRefreshing = false
             }
         })
@@ -104,12 +103,13 @@ class HomeFragment : Fragment() {
     private fun getCategories() {
         viewModel.getCategories().observe(viewLifecycleOwner, Observer { categoriesList ->
             if (categoriesList != null) {
-                categoriesChipAdapter.setCategoryList(this.requireContext(), categoriesList.categories as ArrayList<Category>)
+                setCategoriesChipRV(categoriesList)
             }
         })
     }
 
-    private fun setCategoriesChipRV() {
+    private fun setCategoriesChipRV(categoriesList: CategoryList) {
+        categoriesChipAdapter.setCategoryList(this.requireContext(), categoriesList.categories as ArrayList<Category>)
         binding.rvHomeCategories.apply {
             addItemDecoration(customItemMargin)
             adapter = categoriesChipAdapter
@@ -122,20 +122,19 @@ class HomeFragment : Fragment() {
     private fun getPopularMeals() {
         viewModel.getPopularMeals("Chicken").observe(viewLifecycleOwner, Observer { popularMeals ->
             if (popularMeals != null) {
-                popularMealsAdapter.setPopularMealsList(
-                    this.requireContext(),
-                    popularMeals.meals as ArrayList<Meal>
-                )
+              setPopularMealsRV(popularMeals)
             }
         })
     }
 
-    private fun setPopularMealsRV() {
+    private fun setPopularMealsRV(popularMeals: MealsList) {
+        popularMealsAdapter.setPopularMealsList(this.requireContext(), popularMeals.meals as ArrayList<Meal>)
         binding.rvHomePopular.apply {
             addItemDecoration(customItemMargin)
             adapter = popularMealsAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
+        binding.tvPopular.visibility = View.VISIBLE
     }
 
     //Recommended Meals
@@ -143,19 +142,18 @@ class HomeFragment : Fragment() {
         viewModel.getRecommendedMeals("Vegetarian")
             .observe(viewLifecycleOwner, Observer { recommendedList ->
                 if (recommendedList != null) {
-                    recommendedAdapter.setRecommendedList(
-                        this.requireContext(),
-                        recommendedList.meals as ArrayList<Meal>
-                    )
+                   setRecommendedRV(recommendedList)
                 }
             })
     }
 
-    private fun setRecommendedRV() {
+    private fun setRecommendedRV(recommendedList: MealsList) {
+        recommendedAdapter.setRecommendedList(this.requireContext(), recommendedList.meals as ArrayList<Meal>)
         binding.rvHomeRecommended.apply {
             addItemDecoration(customItemMargin)
             adapter = recommendedAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
+        binding.tvRecommended.visibility = View.VISIBLE
     }
 }

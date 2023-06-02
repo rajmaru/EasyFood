@@ -94,10 +94,11 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="visible">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/heading_ingredients"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -106,8 +107,9 @@
                 android:fontFamily="@font/regular"
                 android:text="Ingredients"
                 android:textColor="@color/text_title"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -115,14 +117,12 @@
                 android:id="@+id/rv_ingredients"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                app:layout_constraintTop_toBottomOf="@+id/heading_ingredients" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/heading_instructions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -131,8 +131,9 @@
                 android:fontFamily="@font/regular"
                 android:text="Instructions"
                 android:textColor="@color/text_title"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv_ingredients" />
 
@@ -146,11 +147,12 @@
                 android:fontFamily="@font/regular"
                 android:text="Instructions"
                 android:textColor="@color/text_subtitle"
-                android:textSize="15sp"
+                android:textSize="14sp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textView2"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                app:layout_constraintStart_toStartOf="@+id/heading_instructions"
+                app:layout_constraintTop_toBottomOf="@+id/heading_instructions" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -178,6 +180,7 @@
         android:foreground="?android:attr/selectableItemBackground"
         android:outlineSpotShadowColor="@color/theme"
         android:translationZ="2dp"
+        android:visibility="gone"
         app:cardCornerRadius="12dp"
         app:cardElevation="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
