@@ -16,7 +16,7 @@ class CustomItemMargin: RecyclerView.ItemDecoration() {
             outRect.left = 20
         }
 
-        if(parent.getChildAdapterPosition(view) == (parent.adapter?.getItemCount()?.minus(1))){
+        if(parent.getChildAdapterPosition(view) == (parent.adapter?.itemCount?.minus(1))){
             outRect.right = 22
         }
     }

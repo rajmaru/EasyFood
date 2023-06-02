@@ -27,7 +27,7 @@ import com.one.easyfood.viewmodel.MealsViewModelFactory
 class MealActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMealBinding
     private lateinit var viewModel: MealsViewModel
-    private lateinit var youtubeLink: String
+    private var youtubeLink: String? = null
     private lateinit var ingredientsAdapter: IngredientsAdapter
     private var mealId: String? = null
     private var meal: Meal? = null
@@ -159,7 +159,9 @@ class MealActivity : AppCompatActivity() {
         }
 
         binding.btnYoutube.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink)))
+            val intent = Intent(this, VideoView::class.java)
+            intent.putExtra("MEAL_YOUTUBE_LINK",youtubeLink!!)
+            startActivity(intent)
         }
     }
 }
