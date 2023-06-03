@@ -109,6 +109,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setCategoriesChipRV(categoriesList: CategoryList) {
+        binding.rvHomeCategories.removeItemDecoration(customItemMargin)
         categoriesChipAdapter.setCategoryList(this.requireContext(), categoriesList.categories as ArrayList<Category>)
         binding.rvHomeCategories.apply {
             addItemDecoration(customItemMargin)
@@ -128,6 +129,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun setPopularMealsRV(popularMeals: MealsList) {
+
+        binding.rvHomePopular.removeItemDecoration(customItemMargin)
+
         popularMealsAdapter.setPopularMealsList(this.requireContext(), popularMeals.meals as ArrayList<Meal>)
         binding.rvHomePopular.apply {
             addItemDecoration(customItemMargin)
@@ -148,6 +152,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setRecommendedRV(recommendedList: MealsList) {
+        binding.rvHomeRecommended.removeItemDecoration(customItemMargin)
         recommendedAdapter.setRecommendedList(this.requireContext(), recommendedList.meals as ArrayList<Meal>)
         binding.rvHomeRecommended.apply {
             addItemDecoration(customItemMargin)
