@@ -21,5 +21,5 @@ interface MealsDao {
     fun getFavMeals(): LiveData<List<Meal>>
 
     @Query("SELECT idMeal FROM mealinformation WHERE idMeal = :idMeal")
-    fun isExist(idMeal : String) : Int
+    fun isExist(idMeal : String?) : Int
 }

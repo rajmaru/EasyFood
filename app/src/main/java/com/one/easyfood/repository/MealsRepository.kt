@@ -149,7 +149,10 @@ class MealsRepository(context: Context) {
             mealsDB.delete(meal)
     }
 
-    fun isMealExistInFavoritesList(idMeal: String): Int {
-            return mealsDB.isExist(idMeal)
+    suspend fun isMealExistInFavoritesList(idMeal: String?): Int {
+        return withContext(Dispatchers.IO) {
+            mealsDB.isExist(idMeal)
+        }
     }
+
 }

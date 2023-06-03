@@ -131,37 +131,58 @@ class MealActivity : AppCompatActivity() {
             .load(meal!!.strMealThumb)
             .transition(DrawableTransitionOptions.withCrossFade(factory))
             .into(binding.imgMeal)
-        if(meal!!.strInstructions?.elementAt(0) == '.'){
+        if (meal!!.strInstructions?.elementAt(0) == '.') {
             Log.d("REMOVE_DOT", meal!!.strInstructions!!.elementAt(0).toString())
-            meal!!.strInstructions = meal!!.strInstructions!!.addCharAtIndex('1',0)
+            meal!!.strInstructions = meal!!.strInstructions!!.addCharAtIndex('1', 0)
         }
-        if(!meal!!.strInstructions?.contains("\r\n\r\n")!!){
+        if (!meal!!.strInstructions?.contains("\r\n\r\n")!!) {
             meal!!.strInstructions = meal!!.strInstructions?.replace(".\r\n", "\r\n\r\n")
         }
         meal!!.strInstructions = meal!!.strInstructions?.trim()
         binding.tvInstructions.text = meal!!.strInstructions
         binding.headingInstructions.visibility = View.VISIBLE
         binding.tvInstructions.visibility = View.VISIBLE
+
+
+        isMealFav()
     }
 
     private fun onClick() {
         binding.mealBackBtn.setOnClickListener {
             finish()
         }
-        binding.mealFavoriteBtn.setOnClickListener{
-            if(viewModel.isMealExistInFavoritesList(meal?.strMeal) == 1){
-                viewModel.deleteMeal(meal!!)
-                binding.mealFavoriteBtn.setImageResource(R.drawable.ic_favorite)
-            }else{
-                viewModel.saveMeal(meal!!)
-                binding.mealFavoriteBtn.setImageResource(R.drawable.ic_favorite_filled)
+        binding.mealFavoriteBtn.setOnClickListener {
+            viewModel.isMealFavorite(mealId).observe(this) { isFavorite ->
+                if (isFavorite == true) {
+                    viewModel.deleteMeal(meal!!)
+                    binding.mealFavoriteBtn.setImageResource(R.drawable.ic_favorite)
+                } else {
+                    viewModel.saveMeal(meal!!)
+                    binding.mealFavoriteBtn.setImageResource(R.drawable.ic_favorite_filled)
+                }
             }
         }
 
+
         binding.btnYoutube.setOnClickListener {
             val intent = Intent(this, VideoView::class.java)
-            intent.putExtra("MEAL_YOUTUBE_LINK",youtubeLink!!)
+            intent.putExtra("MEAL_YOUTUBE_LINK", youtubeLink!!)
             startActivity(intent)
         }
     }
+
+
+    private fun isMealFav() {
+
+        viewModel.isMealFavorite(mealId).observe(this, Observer { isFavorite ->
+            if (isFavorite) {
+                // The meal is a favorite
+                binding.mealFavoriteBtn.setImageResource(R.drawable.ic_favorite_filled)
+            } else {
+                // The meal is not a favorite
+                binding.mealFavoriteBtn.setImageResource(R.drawable.ic_favorite)
+            }
+        })
+    }
+
 }

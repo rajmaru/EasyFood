@@ -2,6 +2,7 @@ package com.one.easyfood.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.one.easyfood.models.CategoryList
@@ -79,15 +80,16 @@ class MealsViewModel(context: Context) : ViewModel() {
         }
     }
 
-    fun isMealExistInFavoritesList(idMeal: String?): Int {
+
+    fun isMealFavorite(idMeal: String?): LiveData<Boolean> {
+        val isFavorite = MutableLiveData<Boolean>()
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                if (idMeal != null) {
-                    isMealExistInFavoritesList = repository.isMealExistInFavoritesList(idMeal)
-                }
-            }
+            val count = repository.isMealExistInFavoritesList(idMeal)
+            isFavorite.value = count > 0
         }
-        return isMealExistInFavoritesList
+        return isFavorite
     }
+
+
 
 }
