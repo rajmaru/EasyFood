@@ -25,4 +25,15 @@
         <!-- Navigation bar color -->
         <item name="android:navigationBarColor">@color/mealactivitynavbarcolor</item>
     </style>
+
+
+    <!-- VideoView Activity theme. -->
+    <style name="Theme.VideoView" parent="Theme.EasyFood">
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!-- Navigation bar color -->
+        <item name="android:navigationBarColor">@color/black</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
 </resources>

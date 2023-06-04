@@ -129,9 +129,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setPopularMealsRV(popularMeals: MealsList) {
-
         binding.rvHomePopular.removeItemDecoration(customItemMargin)
-
         popularMealsAdapter.setPopularMealsList(this.requireContext(), popularMeals.meals as ArrayList<Meal>)
         binding.rvHomePopular.apply {
             addItemDecoration(customItemMargin)

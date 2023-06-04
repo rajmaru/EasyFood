@@ -26,4 +26,12 @@
         <item name="android:navigationBarColor">#0B141B</item>
     </style>
 
+    <!-- VideoView Activity theme. -->
+    <style name="Theme.VideoView" parent="Theme.EasyFood">
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>
+        <!-- Navigation bar color -->
+        <item name="android:navigationBarColor">@color/black</item>
+    </style>
+
 </resources>

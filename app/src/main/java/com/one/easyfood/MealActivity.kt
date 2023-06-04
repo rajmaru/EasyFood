@@ -1,8 +1,6 @@
 package com.one.easyfood
 
 import android.content.Intent
-import android.net.Uri
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -15,7 +13,6 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.one.easyfood.adapters.IngredientsAdapter
 import com.one.easyfood.databinding.ActivityMealBinding
-import com.one.easyfood.itemdecoration.CustomItemMargin
 import com.one.easyfood.itemdecoration.IngredientsItemMargin
 import com.one.easyfood.models.Ingredients
 import com.one.easyfood.models.Meal
@@ -110,6 +107,7 @@ class MealActivity : AppCompatActivity() {
     }
 
     private fun setIngredientsRV(ingredientsList: ArrayList<Ingredients>) {
+        binding.rvIngredients.removeItemDecoration(customItemMargin)
         ingredientsAdapter.setIngredientsList(ingredientsList)
         binding.rvIngredients.apply {
             addItemDecoration(customItemMargin)
