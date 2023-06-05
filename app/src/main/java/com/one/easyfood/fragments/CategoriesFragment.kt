@@ -35,9 +35,18 @@ class CategoriesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        onRefresh()
         getCategories()
         setCategoriesRV()
     }
+
+    private fun onRefresh() {
+        binding.catgeoriesRefresh.setOnRefreshListener {
+            getCategories()
+            setCategoriesRV()
+        }
+    }
+
 
     private fun getCategories() {
         viewModel.getCategories().observe(viewLifecycleOwner, Observer { categories ->
@@ -45,6 +54,7 @@ class CategoriesFragment : Fragment() {
                 categoriesAdapter.setCategoriesList(this.requireContext(), categories.categories as ArrayList<Category>)
             }
         })
+        binding.catgeoriesRefresh.isRefreshing = false
     }
 
     private fun setCategoriesRV() {

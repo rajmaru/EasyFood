@@ -38,12 +38,21 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        onRefresh()
         getFavMeals()
+    }
+
+    private fun onRefresh() {
+        binding.favoritesRefresh.setOnRefreshListener {
+            getFavMeals()
+        }
     }
 
     private fun getFavMeals() {
         viewModel.getFavMeals().observe(viewLifecycleOwner, Observer {favMeals->
             setFavMealsRV(favMeals)
+            binding.favoritesRefresh.isRefreshing = false
         })
     }
 

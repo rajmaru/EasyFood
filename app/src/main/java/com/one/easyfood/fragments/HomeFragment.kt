@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
+import com.one.easyfood.MainActivity
 import com.one.easyfood.MealActivity
 import com.one.easyfood.adapters.CategoriesChipAdapter
 import com.one.easyfood.adapters.PopularMealsAdapter
@@ -22,6 +24,7 @@ import com.one.easyfood.models.Category
 import com.one.easyfood.models.CategoryList
 import com.one.easyfood.models.Meal
 import com.one.easyfood.models.MealsList
+import com.one.easyfood.networkconnection.NetworkConnection
 import com.one.easyfood.viewmodel.MealsViewModel
 import com.one.easyfood.viewmodel.MealsViewModelFactory
 
@@ -36,12 +39,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        viewModel = ViewModelProvider(this, MealsViewModelFactory(this.requireContext()))[MealsViewModel::class.java]
-        categoriesChipAdapter = CategoriesChipAdapter()
-        popularMealsAdapter = PopularMealsAdapter()
-        recommendedAdapter = RecommendedAdapter()
-        customItemMargin = CustomItemMargin()
+        init()
     }
 
     override fun onCreateView(
@@ -54,17 +52,26 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        init()
         onRefresh()
         getRandomMeal()
         getCategories()
         getPopularMeals()
         getRecommended()
-
         onClick()
     }
 
+    private fun init(){
+        viewModel = ViewModelProvider(this, MealsViewModelFactory(this.requireContext()))[MealsViewModel::class.java]
+        categoriesChipAdapter = CategoriesChipAdapter()
+        popularMealsAdapter = PopularMealsAdapter()
+        recommendedAdapter = RecommendedAdapter()
+        customItemMargin = CustomItemMargin()
+    }
+
     private fun onRefresh() {
-        binding.refresh.setOnRefreshListener {
+        binding.homeRefresh.setOnRefreshListener {
             getRandomMeal()
             getCategories()
             getPopularMeals()
@@ -94,7 +101,7 @@ class HomeFragment : Fragment() {
                     .into(binding.imgRandomMeal)
                 binding.tvRandomMeal.text = randomMeal.strMeal
                 binding.cardRandomMeal.visibility = View.VISIBLE
-                binding.refresh.isRefreshing = false
+                binding.homeRefresh.isRefreshing = false
             }
         })
     }
