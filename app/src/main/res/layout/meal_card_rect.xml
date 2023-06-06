@@ -4,6 +4,7 @@
     android:layout_width="330dp"
     android:layout_height="200dp"
     app:cardCornerRadius="18dp"
+    app:cardBackgroundColor="@color/surface"
     app:cardUseCompatPadding="true"
     app:elevation="10dp">
 

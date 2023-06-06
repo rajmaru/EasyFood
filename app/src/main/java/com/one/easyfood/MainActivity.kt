@@ -14,17 +14,17 @@ import com.one.easyfood.networkconnection.NetworkConnection
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    lateinit var networkConnection: NetworkConnection
-
+    private lateinit var networkConnection: NetworkConnection
+    private var isConnected: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        checkInternetConnection()
         init()
         onClick()
+        checkInternetConnection()
     }
 
     override fun onStop() {
@@ -35,11 +35,7 @@ class MainActivity : AppCompatActivity() {
     private fun checkInternetConnection() {
         networkConnection = NetworkConnection(this)
         networkConnection.observe(this) { isConnected ->
-            if (isConnected) {
-                Toast.makeText(this, "MainActivity: Connected", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "MainActivity: Not Connected", Toast.LENGTH_SHORT).show()
-            }
+            this.isConnected = isConnected
         }
     }
 
@@ -51,7 +47,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun onClick() {
         binding.mainSearchBtn.setOnClickListener {
-            startActivity(Intent(this, SearchActivity::class.java))
+            if (isConnected) {
+                startActivity(Intent(this, SearchActivity::class.java))
+            } else {
+                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

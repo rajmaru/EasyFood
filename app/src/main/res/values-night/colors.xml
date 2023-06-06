@@ -11,6 +11,9 @@
     <color name="background">#121B22</color>
     <color name="surface">#1F2C34</color>
 
+    <color name="shimmer_surface">#1F2C34</color>
+    <color name="shimmer_text">#F4F4F4</color>
+
     <color name="text_title">#F4F4F4</color>
     <color name="text_subtitle">#AFBDC3</color>
     <color name="card_title">#F4F4F4</color>
