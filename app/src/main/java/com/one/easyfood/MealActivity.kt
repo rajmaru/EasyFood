@@ -32,6 +32,7 @@ class MealActivity : AppCompatActivity() {
     private var meal: Meal? = null
     private lateinit var customItemMargin: IngredientsItemMargin
     private lateinit var networkConnection: NetworkConnection
+    private var isConnected: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,9 +61,10 @@ class MealActivity : AppCompatActivity() {
         networkConnection = NetworkConnection(this)
         networkConnection.observe(this) { isConnected ->
             if (isConnected) {
-                Toast.makeText(this, "MealActivity: Connected", Toast.LENGTH_SHORT).show()
+                this.isConnected = isConnected
             } else {
-                Toast.makeText(this, "MealActivity: Not Connected", Toast.LENGTH_SHORT).show()
+                this.isConnected = isConnected
+                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -73,22 +75,26 @@ class MealActivity : AppCompatActivity() {
     }
 
     private fun getMealDataById() {
-        viewModel.getMealById(mealId!!).observe(this, Observer { mealResponse ->
-            if (mealResponse != null) {
-                meal = mealResponse
-                if (!meal!!.strYoutube.isNullOrEmpty()) {
-                    youtubeLink = meal!!.strYoutube.toString()
-                } else {
-                    val str = Regex("[^A-Za-z0-9]").replace(meal!!.strMeal.toString(), "")
-                    if (MealsYoutubeLinks.isInEnum(str)) {
-                        youtubeLink = MealsYoutubeLinks.valueOf(str).strYoutube
+        if(isConnected){
+            viewModel.getMealById(mealId!!).observe(this, Observer { mealResponse ->
+                if (mealResponse != null) {
+                    meal = mealResponse
+                    if (!meal!!.strYoutube.isNullOrEmpty()) {
+                        youtubeLink = meal!!.strYoutube.toString()
+                    } else {
+                        val str = Regex("[^A-Za-z0-9]").replace(meal!!.strMeal.toString(), "")
+                        if (MealsYoutubeLinks.isInEnum(str)) {
+                            youtubeLink = MealsYoutubeLinks.valueOf(str).strYoutube
+                        }
                     }
+                    binding.btnYoutube.visibility = View.VISIBLE
+                    setDataInViews()
+                    getIngredientsList()
                 }
-                binding.btnYoutube.visibility = View.VISIBLE
-                setDataInViews()
-                getIngredientsList()
-            }
-        })
+            })
+        }else{
+           // Getting meal from Room Database
+        }
     }
 
     private fun String.addCharAtIndex(char: Char, index: Int) =
