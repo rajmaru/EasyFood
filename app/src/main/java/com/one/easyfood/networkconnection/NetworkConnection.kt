@@ -14,7 +14,7 @@ class NetworkConnection(private val context: Context) : LiveData<Boolean>() {
     private lateinit var networkConnectionCallback: ConnectivityManager.NetworkCallback
     private var isRegistered = false
 
-    override fun onActive() {
+    public override fun onActive() {
         super.onActive()
         if (!isRegistered) {
             connectivityManager.registerDefaultNetworkCallback(connectivityManagerCallback())

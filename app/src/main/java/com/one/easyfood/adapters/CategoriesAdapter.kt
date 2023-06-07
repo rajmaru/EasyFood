@@ -11,7 +11,6 @@ import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.one.easyfood.MealListActivity
 import com.one.easyfood.databinding.CategoriesListItemBinding
 import com.one.easyfood.models.Category
-import java.net.ConnectException
 
 class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.CategoriesViewHolder>() {
 

@@ -1,3 +1,4 @@
+// CategoriesFragment.kt
 package com.one.easyfood.fragments
 
 import android.os.Bundle
@@ -21,46 +22,47 @@ class CategoriesFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this, MealsViewModelFactory(this.requireContext()))[MealsViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this,
+            MealsViewModelFactory(requireContext())
+        ).get(MealsViewModel::class.java)
         categoriesAdapter = CategoriesAdapter()
     }
- 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentCategoriesBinding.inflate(layoutInflater)
+        binding = FragmentCategoriesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        onRefresh()
+        setOnRefreshListener()
         getCategories()
         setCategoriesRV()
     }
 
-    private fun onRefresh() {
+    private fun setOnRefreshListener() {
         binding.catgeoriesRefresh.setOnRefreshListener {
             getCategories()
-            setCategoriesRV()
         }
     }
 
-
     private fun getCategories() {
         viewModel.getCategories().observe(viewLifecycleOwner, Observer { categories ->
-            if (categories != null) {
-                categoriesAdapter.setCategoriesList(this.requireContext(), categories.categories as ArrayList<Category>)
+            categories?.let {
+                categoriesAdapter.setCategoriesList(requireContext(), it.categories as ArrayList<Category>)
             }
+            binding.catgeoriesRefresh.isRefreshing = false
         })
-        binding.catgeoriesRefresh.isRefreshing = false
     }
 
     private fun setCategoriesRV() {
         binding.rvCategories.apply {
             adapter = categoriesAdapter
-            layoutManager = GridLayoutManager(context,3)
+            layoutManager = GridLayoutManager(context, 3)
         }
     }
 }

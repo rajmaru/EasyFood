@@ -1,7 +1,6 @@
 package com.one.easyfood.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.one.easyfood.adapters.FavoriteMealsAdapter
 import com.one.easyfood.databinding.FragmentFavoritesBinding
 import com.one.easyfood.models.Meal
-import com.one.easyfood.networkconnection.NetworkConnection
 import com.one.easyfood.viewmodel.MealsViewModel
 import com.one.easyfood.viewmodel.MealsViewModelFactory
 
@@ -21,80 +19,70 @@ class FavoritesFragment : Fragment() {
     private lateinit var binding: FragmentFavoritesBinding
     private lateinit var viewModel: MealsViewModel
     private lateinit var favMealsAdapter: FavoriteMealsAdapter
-    private lateinit var networkConnection: NetworkConnection
-    private var isConnected: Boolean = false
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        init()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentFavoritesBinding.inflate(layoutInflater)
+        binding = FragmentFavoritesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         init()
-        checkNetworkConnection()
-        onRefresh()
+        setOnRefreshListener()
+        getFavMeals()
     }
 
-    private fun checkNetworkConnection() {
-        networkConnection.observe(this.requireActivity()) { isConnected ->
-            if(isConnected){
-                this.isConnected = isConnected
-                getFavMeals()
-            }else{
-                this.isConnected = isConnected
-                Toast.makeText(this.requireContext(), "No Internet Connection", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun init(){
-        networkConnection = NetworkConnection(this.requireContext())
+    private fun init() {
         viewModel = ViewModelProvider(
             this,
-            MealsViewModelFactory(this.requireContext())
-        )[MealsViewModel::class.java]
+            MealsViewModelFactory(requireContext())
+        ).get(MealsViewModel::class.java)
         favMealsAdapter = FavoriteMealsAdapter()
     }
 
-    private fun onRefresh() {
+    private fun setOnRefreshListener() {
         binding.favoritesRefresh.setOnRefreshListener {
-            if(isConnected && binding.favoritesRefresh.isRefreshing){
+            if (binding.favoritesRefresh.isRefreshing) {
                 binding.favoritesRefresh.isRefreshing = false
                 getFavMeals()
-            }else{
+            } else {
                 binding.favoritesRefresh.isRefreshing = false
-                Toast.makeText(this.requireContext(), "No Internet Connection", Toast.LENGTH_SHORT).show()
+                showToast("No Internet Connection")
             }
         }
     }
 
     private fun getFavMeals() {
-        viewModel.getFavMeals().observe(viewLifecycleOwner, Observer {favMeals->
-            if(favMeals.isNullOrEmpty()){
-                binding.emptyFavoritesLayout.visibility = View.VISIBLE
-            }else{
-                binding.emptyFavoritesLayout.visibility = View.GONE
+        viewModel.getFavMeals().observe(viewLifecycleOwner, Observer { favMeals ->
+            if (favMeals.isNullOrEmpty()) {
+                showEmptyFavoritesLayout()
+            } else {
+                hideEmptyFavoritesLayout()
                 setFavMealsRV(favMeals)
             }
         })
     }
 
-    private fun setFavMealsRV(favMeals: List<Meal?>) {
-        favMealsAdapter.setFavMealsList(this.requireContext(), favMeals as List<Meal>)
+    private fun showEmptyFavoritesLayout() {
+        binding.emptyFavoritesLayout.visibility = View.VISIBLE
+    }
+
+    private fun hideEmptyFavoritesLayout() {
+        binding.emptyFavoritesLayout.visibility = View.GONE
+    }
+
+    private fun setFavMealsRV(favMeals: List<Meal>) {
+        favMealsAdapter.setFavMealsList(requireContext(), favMeals)
         binding.rvFavorites.apply {
             adapter = favMealsAdapter
-            layoutManager = GridLayoutManager(this@FavoritesFragment.requireContext(), 2)
+            layoutManager = GridLayoutManager(requireContext(), 2)
         }
     }
 
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
 }

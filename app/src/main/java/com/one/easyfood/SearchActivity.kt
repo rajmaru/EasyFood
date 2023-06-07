@@ -16,10 +16,14 @@ import com.one.easyfood.viewmodel.MealsViewModel
 import com.one.easyfood.viewmodel.MealsViewModelFactory
 
 class SearchActivity : AppCompatActivity() {
-    private lateinit var networkConnection: NetworkConnection
+
     private lateinit var binding: ActivitySearchBinding
     private lateinit var viewModel: MealsViewModel
     private lateinit var searchedMealAdapter: SearchedMealAdapter
+    private lateinit var networkConnection: NetworkConnection
+    private var isConnected: Boolean = false
+    private lateinit var mealsList: List<Meal>
+    private var searchedMealName: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +32,24 @@ class SearchActivity : AppCompatActivity() {
 
         binding.searchMealTv.requestFocus()
 
-        checkInternetConnection()
         init()
-        getSearchedMeal()
+        checkInternetConnection()
+        onClick()
+    }
+
+    private fun onClick() {
+        binding.searchMealBtn.setOnClickListener {
+            if (isConnected) {
+                getSearchedMeal(searchedMealName)
+            } else {
+                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.searchMealTv.addTextChangedListener { searchedText ->
+            searchedMealName = searchedText.toString()
+            getSearchedMeal(searchedMealName)
+        }
     }
 
     override fun onStop() {
@@ -42,26 +61,32 @@ class SearchActivity : AppCompatActivity() {
         networkConnection = NetworkConnection(this)
         networkConnection.observe(this) { isConnected ->
             if (isConnected) {
-                Toast.makeText(this, "SearchActivity: Connected", Toast.LENGTH_SHORT).show()
+                this.isConnected = isConnected
+                if (searchedMealName != null) {
+                    getSearchedMeal(searchedMealName)
+                }
             } else {
-                Toast.makeText(this, "SearchActivity: Not Connected", Toast.LENGTH_SHORT).show()
+                this.isConnected = isConnected
+                searchedMealAdapter.setIsConnected(isConnected)
+                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun init(){
+    private fun init() {
         viewModel = ViewModelProvider(this, MealsViewModelFactory(this))[MealsViewModel::class.java]
-        searchedMealAdapter = SearchedMealAdapter()    }
+        searchedMealAdapter = SearchedMealAdapter()
+    }
 
-    private fun getSearchedMeal() {
-        binding.searchMealTv.addTextChangedListener {searchedText->
-            viewModel.searchMeals(searchedText.toString()).observe(this, Observer {mealsList->
+    private fun getSearchedMeal(searchedMealName: String?) {
+        if(searchedMealName != null){
+            viewModel.searchMeals(searchedMealName).observe(this, Observer { mealsList ->
                 if (mealsList != null) {
-                    if(!mealsList.meals.isNullOrEmpty()){
+                    if (!mealsList.meals.isNullOrEmpty()) {
                         binding.searchMealRv.visibility = View.VISIBLE
-                        searchedMealAdapter.setSearchedMealList(this, mealsList.meals as ArrayList<Meal>)
-                        setSearchedMealsRv()
-                    }else{
+                        this.mealsList = mealsList.meals
+                        setSearchedMealsRv(this.mealsList)
+                    } else {
                         binding.searchMealRv.visibility = View.INVISIBLE
                     }
                 }
@@ -69,7 +94,11 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun setSearchedMealsRv() {
+    private fun setSearchedMealsRv(mealsList: List<Meal>) {
+        searchedMealAdapter.apply {
+            setSearchedMealList(this@SearchActivity, mealsList as ArrayList<Meal>)
+            setIsConnected(isConnected)
+        }
         binding.searchMealRv.apply {
             adapter = searchedMealAdapter
             layoutManager = GridLayoutManager(this@SearchActivity, 2)

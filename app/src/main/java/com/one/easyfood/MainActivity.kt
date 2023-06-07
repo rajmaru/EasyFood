@@ -1,5 +1,3 @@
-// MainActivity.kt
-
 package com.one.easyfood
 
 import android.content.Intent
@@ -16,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var networkConnection: NetworkConnection
     private var isConnected: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
@@ -40,7 +39,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        // Bottom Navigation
+        setupBottomNavigation()
+    }
+
+    private fun setupBottomNavigation() {
         val navController = Navigation.findNavController(this, R.id.host_fragment)
         NavigationUI.setupWithNavController(binding.btmNav, navController)
     }

@@ -2,13 +2,11 @@ package com.one.easyfood.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,16 +43,11 @@ class HomeFragment : Fragment() {
 
     private lateinit var randomMeal: Meal
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        init()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHomeBinding.inflate(layoutInflater)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -62,55 +55,53 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
         checkNetworkConnection()
-        onClick()
-        onRefresh()
+        setOnClickListeners()
+        setOnRefreshListener()
     }
 
-
     private fun init() {
-        networkConnection = NetworkConnection(this.requireContext())
+        networkConnection = NetworkConnection(requireContext())
         viewModel = ViewModelProvider(
             this,
-            MealsViewModelFactory(this.requireContext())
-        )[MealsViewModel::class.java]
+            MealsViewModelFactory(requireContext())
+        ).get(MealsViewModel::class.java)
         categoriesChipAdapter = CategoriesChipAdapter()
         popularMealsAdapter = PopularMealsAdapter()
         recommendedAdapter = RecommendedAdapter()
         customItemMargin = CustomItemMargin()
     }
 
-    private fun onClick(){
+    private fun setOnClickListeners() {
         binding.cardRandomMeal.setOnClickListener {
-            if(isConnected){
-                val intent = Intent(this.activity, MealActivity::class.java)
+            if (isConnected) {
+                val intent = Intent(requireActivity(), MealActivity::class.java)
                 intent.putExtra("MEAL_ID", randomMeal.idMeal)
                 startActivity(intent)
-            }else{
-                Toast.makeText(this.requireContext(), "No Internet Connection", Toast.LENGTH_SHORT).show()
+            } else {
+                showToast("No Internet Connection")
             }
         }
     }
 
-    private fun onRefresh() {
+    private fun setOnRefreshListener() {
         binding.homeRefresh.setOnRefreshListener {
-                if(isConnected && binding.homeRefresh.isRefreshing){
-                    binding.homeRefresh.isRefreshing = false
-                    callData()
-                }else{
-                    binding.homeRefresh.isRefreshing = false
-                    Toast.makeText(this.requireContext(), "No Internet Connection", Toast.LENGTH_SHORT).show()
-                }
+            if (isConnected && binding.homeRefresh.isRefreshing) {
+                binding.homeRefresh.isRefreshing = false
+                callData()
+            } else {
+                binding.homeRefresh.isRefreshing = false
+                showToast("No Internet Connection")
             }
+        }
     }
 
     private fun checkNetworkConnection() {
-        networkConnection.observe(this.requireActivity()) { isConnected ->
-            if(isConnected){
-                this.isConnected = isConnected
+        networkConnection.observe(viewLifecycleOwner) { isConnected ->
+            this.isConnected = isConnected
+            if (isConnected) {
                 callData()
-            }else{
-                this.isConnected = isConnected
-                Toast.makeText(this.requireContext(), "No Internet Connection", Toast.LENGTH_SHORT).show()
+            } else {
+                showToast("No Internet Connection")
             }
         }
     }
@@ -122,13 +113,12 @@ class HomeFragment : Fragment() {
         getRecommended()
     }
 
-    //Random Meal
     private fun getRandomMeal() {
         val factory = DrawableCrossFadeFactory.Builder()
             .setCrossFadeEnabled(true)
             .build()
         viewModel.getRandomMeal().observe(viewLifecycleOwner, Observer { meal ->
-            if (meal != null) {
+            meal?.let {
                 randomMeal = meal
                 Glide.with(this@HomeFragment)
                     .load(randomMeal.strMealThumb)
@@ -140,10 +130,9 @@ class HomeFragment : Fragment() {
         })
     }
 
-    //Categories Chip
     private fun getCategories() {
         viewModel.getCategories().observe(viewLifecycleOwner, Observer { categoriesList ->
-            if (categoriesList != null) {
+            categoriesList?.let {
                 setCategoriesChipRV(categoriesList)
             }
         })
@@ -151,11 +140,7 @@ class HomeFragment : Fragment() {
 
     private fun setCategoriesChipRV(categoriesList: CategoryList) {
         binding.rvHomeCategories.removeItemDecoration(customItemMargin)
-        categoriesChipAdapter.setCategoryList(
-            this.requireContext(),
-            categoriesList.categories as ArrayList<Category>,
-            isConnected
-        )
+        categoriesChipAdapter.setCategoryList(requireContext(), categoriesList.categories as ArrayList<Category>, isConnected)
         binding.rvHomeCategories.apply {
             addItemDecoration(customItemMargin)
             adapter = categoriesChipAdapter
@@ -164,11 +149,9 @@ class HomeFragment : Fragment() {
         binding.categoriesChipShimmer.visibility = View.GONE
     }
 
-
-    //Popular Meals
     private fun getPopularMeals() {
         viewModel.getPopularMeals("Chicken").observe(viewLifecycleOwner, Observer { popularMeals ->
-            if (popularMeals != null) {
+            popularMeals?.let {
                 setPopularMealsRV(popularMeals)
             }
         })
@@ -176,10 +159,7 @@ class HomeFragment : Fragment() {
 
     private fun setPopularMealsRV(popularMeals: MealsList) {
         binding.rvHomePopular.removeItemDecoration(customItemMargin)
-        popularMealsAdapter.setPopularMealsList(
-            this.requireContext(),
-            popularMeals.meals as ArrayList<Meal>
-        )
+        popularMealsAdapter.setPopularMealsList(requireContext(), popularMeals.meals as ArrayList<Meal>)
         binding.rvHomePopular.apply {
             addItemDecoration(customItemMargin)
             adapter = popularMealsAdapter
@@ -187,25 +167,19 @@ class HomeFragment : Fragment() {
         }
         binding.rvHomePopular.visibility = View.VISIBLE
         binding.popularRvShimmer.visibility = View.GONE
-
     }
 
-    //Recommended Meals
     private fun getRecommended() {
-        viewModel.getRecommendedMeals("Vegetarian")
-            .observe(viewLifecycleOwner, Observer { recommendedList ->
-                if (recommendedList != null) {
-                    setRecommendedRV(recommendedList)
-                }
-            })
+        viewModel.getRecommendedMeals("Vegetarian").observe(viewLifecycleOwner, Observer { recommendedList ->
+            recommendedList?.let {
+                setRecommendedRV(recommendedList)
+            }
+        })
     }
 
     private fun setRecommendedRV(recommendedList: MealsList) {
         binding.rvHomeRecommended.removeItemDecoration(customItemMargin)
-        recommendedAdapter.setRecommendedList(
-            this.requireContext(),
-            recommendedList.meals as ArrayList<Meal>
-        )
+        recommendedAdapter.setRecommendedList(requireContext(), recommendedList.meals as ArrayList<Meal>)
         binding.rvHomeRecommended.apply {
             addItemDecoration(customItemMargin)
             adapter = recommendedAdapter
@@ -213,5 +187,9 @@ class HomeFragment : Fragment() {
         }
         binding.rvHomeRecommended.visibility = View.VISIBLE
         binding.recommendedRvShimmer.visibility = View.GONE
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }

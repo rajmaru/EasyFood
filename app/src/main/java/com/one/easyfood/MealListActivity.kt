@@ -29,7 +29,7 @@ class MealListActivity : AppCompatActivity() {
         getCategoryName()
     }
 
-    private fun init(){
+    private fun init() {
         viewModel = ViewModelProvider(this, MealsViewModelFactory(this))[MealsViewModel::class.java]
         mealListAdapter = MealListAdapter()
     }
@@ -42,35 +42,34 @@ class MealListActivity : AppCompatActivity() {
     private fun checkInternetConnection() {
         networkConnection = NetworkConnection(this)
         networkConnection.observe(this) { isConnected ->
-            if (isConnected) {
-                Toast.makeText(this, "MealListActivity: Connected", Toast.LENGTH_SHORT).show()
+            val message = if (isConnected) {
+                "MealListActivity: Connected"
             } else {
-                Toast.makeText(this, "MealListActivity: Not Connected", Toast.LENGTH_SHORT).show()
+                "MealListActivity: Not Connected"
             }
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun getCategoryName() {
-        val categoryName= intent.getStringExtra("CATEGORY_NAME").toString()
+        val categoryName = intent.getStringExtra("CATEGORY_NAME").toString()
         getMealList(categoryName)
     }
 
     private fun getMealList(categoryName: String) {
         viewModel.getMealsByCategory(categoryName).observe(this, Observer { mealsList ->
-            if (mealsList != null) {
-                setMealListRV(mealsList.meals as ArrayList<Meal>)
+            mealsList?.meals?.let { meals ->
+                setMealListRV(meals)
             }
         })
     }
 
-
-    private fun setMealListRV(meals: ArrayList<Meal>) {
-        mealListAdapter.setMeallist(this, meals)
-        binding.tvMeallistTotal.text = "Total : ${meals.size.toString()}"
+    private fun setMealListRV(meals: List<Meal>) {
+        mealListAdapter.setMeallist(this, meals as ArrayList<Meal> )
+        binding.tvMeallistTotal.text = "Total: ${meals.size.toString()}"
         binding.rvMeallist.apply {
             adapter = mealListAdapter
             layoutManager = GridLayoutManager(this@MealListActivity, 2)
         }
     }
-
 }
