@@ -21,6 +21,8 @@ import com.one.easyfood.models.MealsYoutubeLinks
 import com.one.easyfood.networkconnection.NetworkConnection
 import com.one.easyfood.viewmodel.MealsViewModel
 import com.one.easyfood.viewmodel.MealsViewModelFactory
+import java.time.LocalDate
+import kotlin.math.log
 
 
 class MealActivity : AppCompatActivity() {
@@ -39,50 +41,70 @@ class MealActivity : AppCompatActivity() {
         binding = ActivityMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        checkInternetConnection()
         init()
-        getMealId()
+        checkInternetConnection()
         onClick()
 
     }
 
-    private fun init(){
+    private fun init() {
         viewModel = ViewModelProvider(this, MealsViewModelFactory(this))[MealsViewModel::class.java]
         ingredientsAdapter = IngredientsAdapter()
         customItemMargin = IngredientsItemMargin()
     }
 
-    override fun onStop() {
-        super.onStop()
-        networkConnection.unregisterNetworkCallback()
-    }
-
     private fun checkInternetConnection() {
         networkConnection = NetworkConnection(this)
         networkConnection.observe(this) { isConnected ->
-            if (isConnected) {
-                this.isConnected = isConnected
-            } else {
-                this.isConnected = isConnected
+            this.isConnected = isConnected
+            if (!isConnected) {
                 Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show()
             }
+            Log.d("MEAL_DB", "from checkInternetConnection()")
+            getMealId()
+        }
+    }
+
+    private fun onClick() {
+        binding.mealBackBtn.setOnClickListener {
+            finish()
+        }
+        binding.mealFavoriteBtn.setOnClickListener {
+            viewModel.isMealFavorite(mealId).observe(this) { isFavorite ->
+                if (isFavorite == true) {
+                    viewModel.deleteMeal(meal!!)
+                    binding.mealFavoriteBtn.setImageResource(R.drawable.ic_favorite)
+                } else {
+                    viewModel.saveMeal(meal!!)
+                    binding.mealFavoriteBtn.setImageResource(R.drawable.ic_favorite_filled)
+                }
+            }
+        }
+
+
+        binding.btnYoutube.setOnClickListener {
+            val intent = Intent(this, VideoView::class.java)
+            intent.putExtra("MEAL_YOUTUBE_LINK", youtubeLink!!)
+            startActivity(intent)
         }
     }
 
     private fun getMealId() {
         mealId = intent.getStringExtra("MEAL_ID").toString()
+        Log.d("MEAL_DB", "From getMealId()" + mealId!!)
         getMealDataById()
     }
 
     private fun getMealDataById() {
-        if(isConnected){
-            viewModel.getMealById(mealId!!).observe(this, Observer { mealResponse ->
-                if (mealResponse != null) {
-                    meal = mealResponse
-                    if (!meal!!.strYoutube.isNullOrEmpty()) {
-                        youtubeLink = meal!!.strYoutube.toString()
+        if (isConnected) {
+            // Get Data From Api
+            viewModel.getMealById(mealId!!).observe(this, Observer { meal ->
+                if (meal != null) {
+                    this.meal = meal
+                    if (!meal.strYoutube.isNullOrEmpty()) {
+                        youtubeLink = meal.strYoutube.toString()
                     } else {
-                        val str = Regex("[^A-Za-z0-9]").replace(meal!!.strMeal.toString(), "")
+                        val str = Regex("[^A-Za-z0-9]").replace(meal.strMeal.toString(), "")
                         if (MealsYoutubeLinks.isInEnum(str)) {
                             youtubeLink = MealsYoutubeLinks.valueOf(str).strYoutube
                         }
@@ -92,9 +114,47 @@ class MealActivity : AppCompatActivity() {
                     getIngredientsList()
                 }
             })
-        }else{
-           // Getting meal from Room Database
+        } else {
+            // Getting meal from Room Database
+            Log.d("MEAL_DB", "from getMealDataById() mealId = " + mealId!!)
+            viewModel.getMealFromDB(mealId).observe(this, Observer { meal ->
+                if(meal != null){
+                    this.meal = meal
+                    Log.d("MEAL_DB", "from getMealDataById() meal = " + this.meal!!.strMeal)
+                    setDataInViews()
+                    getIngredientsList()
+                }
+            })
         }
+    }
+
+    private fun setDataInViews() {
+        // The cross-fade transition
+        val factory = DrawableCrossFadeFactory.Builder()
+            .setCrossFadeEnabled(true)
+            .build()
+        binding.tvMealName.text = meal!!.strMeal
+        Glide.with(this@MealActivity)
+            .load(meal!!.strMealThumb)
+            .transition(DrawableTransitionOptions.withCrossFade(factory))
+            .into(binding.imgMeal)
+        if (isConnected) {
+            if (meal!!.strInstructions?.elementAt(0) == '.') {
+                Log.d("REMOVE_DOT", meal!!.strInstructions!!.elementAt(0).toString())
+                meal!!.strInstructions = meal!!.strInstructions!!.addCharAtIndex('1', 0)
+            }
+            if (!meal!!.strInstructions?.contains("\r\n\r\n")!!) {
+                meal!!.strInstructions = meal!!.strInstructions?.replace(".\r\n", "\r\n\r\n")
+            }
+            meal!!.strInstructions = meal!!.strInstructions?.trim()
+        }else{
+            youtubeLink = meal!!.strYoutube.toString()
+            binding.btnYoutube.visibility = View.VISIBLE
+        }
+        binding.tvInstructions.text = meal!!.strInstructions
+        binding.headingInstructions.visibility = View.VISIBLE
+        binding.tvInstructions.visibility = View.VISIBLE
+        isMealFav()
     }
 
     private fun String.addCharAtIndex(char: Char, index: Int) =
@@ -147,58 +207,6 @@ class MealActivity : AppCompatActivity() {
         binding.headingIngredients.visibility = View.VISIBLE
     }
 
-    private fun setDataInViews() {
-        // The cross-fade transition
-        val factory = DrawableCrossFadeFactory.Builder()
-            .setCrossFadeEnabled(true)
-            .build()
-
-        binding.tvMealName.text = meal!!.strMeal
-        Glide.with(this@MealActivity)
-            .load(meal!!.strMealThumb)
-            .transition(DrawableTransitionOptions.withCrossFade(factory))
-            .into(binding.imgMeal)
-        if (meal!!.strInstructions?.elementAt(0) == '.') {
-            Log.d("REMOVE_DOT", meal!!.strInstructions!!.elementAt(0).toString())
-            meal!!.strInstructions = meal!!.strInstructions!!.addCharAtIndex('1', 0)
-        }
-        if (!meal!!.strInstructions?.contains("\r\n\r\n")!!) {
-            meal!!.strInstructions = meal!!.strInstructions?.replace(".\r\n", "\r\n\r\n")
-        }
-        meal!!.strInstructions = meal!!.strInstructions?.trim()
-        binding.tvInstructions.text = meal!!.strInstructions
-        binding.headingInstructions.visibility = View.VISIBLE
-        binding.tvInstructions.visibility = View.VISIBLE
-
-
-        isMealFav()
-    }
-
-    private fun onClick() {
-        binding.mealBackBtn.setOnClickListener {
-            finish()
-        }
-        binding.mealFavoriteBtn.setOnClickListener {
-            viewModel.isMealFavorite(mealId).observe(this) { isFavorite ->
-                if (isFavorite == true) {
-                    viewModel.deleteMeal(meal!!)
-                    binding.mealFavoriteBtn.setImageResource(R.drawable.ic_favorite)
-                } else {
-                    viewModel.saveMeal(meal!!)
-                    binding.mealFavoriteBtn.setImageResource(R.drawable.ic_favorite_filled)
-                }
-            }
-        }
-
-
-        binding.btnYoutube.setOnClickListener {
-            val intent = Intent(this, VideoView::class.java)
-            intent.putExtra("MEAL_YOUTUBE_LINK", youtubeLink!!)
-            startActivity(intent)
-        }
-    }
-
-
     private fun isMealFav() {
 
         viewModel.isMealFavorite(mealId).observe(this, Observer { isFavorite ->
@@ -212,4 +220,8 @@ class MealActivity : AppCompatActivity() {
         })
     }
 
+    override fun onStop() {
+        super.onStop()
+        networkConnection.unregisterNetworkCallback()
+    }
 }

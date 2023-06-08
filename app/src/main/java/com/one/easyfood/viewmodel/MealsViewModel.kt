@@ -1,6 +1,7 @@
 package com.one.easyfood.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,7 +24,7 @@ class MealsViewModel(context: Context) : ViewModel() {
     private lateinit var mealsByCategory: LiveData<MealsList?>
     private lateinit var searchedMeals: LiveData<MealsList?>
     private lateinit var mealById: LiveData<Meal?>
-    private var isMealExistInFavoritesList = 0
+    private var mealFromDB = MutableLiveData<Meal?>()
 
     fun getRandomMeal(): LiveData<Meal?> {
         randomMeal = repository.getRandomMeal()
@@ -64,6 +65,10 @@ class MealsViewModel(context: Context) : ViewModel() {
         return repository.getFavMeals()
     }
 
+    fun getMealFromDB(idMeal: String?): LiveData<Meal> {
+        return repository.getMealFromDB(idMeal)
+    }
+
     fun saveMeal(meal: Meal) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -89,7 +94,4 @@ class MealsViewModel(context: Context) : ViewModel() {
         }
         return isFavorite
     }
-
-
-
 }

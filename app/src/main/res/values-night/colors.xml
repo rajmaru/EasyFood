@@ -30,4 +30,7 @@
     <color name="btm_nav_color_unchecked">#85969E</color>
     <color name="btm_nav_color_ripple">#1F2D38</color>
 
+    <color name="snackbar_bg">#008069</color>
+    <color name="snackbar_text">#FFFFFF</color>
+
 </resources>

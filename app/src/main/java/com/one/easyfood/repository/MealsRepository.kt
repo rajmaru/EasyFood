@@ -141,6 +141,10 @@ class MealsRepository(context: Context) {
         return mealsDB.getFavMeals()
     }
 
+    fun getMealFromDB(idMeal: String?): LiveData<Meal>{
+        return mealsDB.getMealFromDB(idMeal)
+    }
+
     fun saveMeal(meal: Meal){
             mealsDB.upsert(meal)
     }

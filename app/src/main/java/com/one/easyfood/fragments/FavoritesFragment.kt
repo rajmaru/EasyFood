@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.one.easyfood.MainActivity
 import com.one.easyfood.adapters.FavoriteMealsAdapter
 import com.one.easyfood.databinding.FragmentFavoritesBinding
 import com.one.easyfood.models.Meal
@@ -39,7 +40,7 @@ class FavoritesFragment : Fragment() {
         viewModel = ViewModelProvider(
             this,
             MealsViewModelFactory(requireContext())
-        ).get(MealsViewModel::class.java)
+        )[MealsViewModel::class.java]
         favMealsAdapter = FavoriteMealsAdapter()
     }
 
@@ -50,7 +51,6 @@ class FavoritesFragment : Fragment() {
                 getFavMeals()
             } else {
                 binding.favoritesRefresh.isRefreshing = false
-                showToast("No Internet Connection")
             }
         }
     }
@@ -80,9 +80,5 @@ class FavoritesFragment : Fragment() {
             adapter = favMealsAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)
         }
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }

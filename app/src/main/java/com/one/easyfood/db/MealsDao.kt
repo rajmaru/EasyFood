@@ -22,4 +22,7 @@ interface MealsDao {
 
     @Query("SELECT idMeal FROM mealinformation WHERE idMeal = :idMeal")
     fun isExist(idMeal : String?) : Int
+
+    @Query("SELECT idMeal FROM mealinformation WHERE idMeal = :idMeal")
+    fun getMealFromDB(idMeal : String?) : LiveData<Meal>
 }

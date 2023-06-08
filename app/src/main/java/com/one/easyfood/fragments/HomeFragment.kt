@@ -13,7 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
+import com.google.android.material.snackbar.Snackbar
+import com.one.easyfood.MainActivity
 import com.one.easyfood.MealActivity
+import com.one.easyfood.R
 import com.one.easyfood.adapters.CategoriesChipAdapter
 import com.one.easyfood.adapters.PopularMealsAdapter
 import com.one.easyfood.adapters.RecommendedAdapter
@@ -64,7 +67,7 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(
             this,
             MealsViewModelFactory(requireContext())
-        ).get(MealsViewModel::class.java)
+        )[MealsViewModel::class.java]
         categoriesChipAdapter = CategoriesChipAdapter()
         popularMealsAdapter = PopularMealsAdapter()
         recommendedAdapter = RecommendedAdapter()
@@ -77,8 +80,6 @@ class HomeFragment : Fragment() {
                 val intent = Intent(requireActivity(), MealActivity::class.java)
                 intent.putExtra("MEAL_ID", randomMeal.idMeal)
                 startActivity(intent)
-            } else {
-                showToast("No Internet Connection")
             }
         }
     }
@@ -90,7 +91,6 @@ class HomeFragment : Fragment() {
                 callData()
             } else {
                 binding.homeRefresh.isRefreshing = false
-                showToast("No Internet Connection")
             }
         }
     }
@@ -100,8 +100,6 @@ class HomeFragment : Fragment() {
             this.isConnected = isConnected
             if (isConnected) {
                 callData()
-            } else {
-                showToast("No Internet Connection")
             }
         }
     }
@@ -187,9 +185,5 @@ class HomeFragment : Fragment() {
         }
         binding.rvHomeRecommended.visibility = View.VISIBLE
         binding.recommendedRvShimmer.visibility = View.GONE
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }

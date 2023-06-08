@@ -2,12 +2,17 @@ package com.one.easyfood
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
+import android.view.Gravity
 import android.view.View
 import android.widget.Toast
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import com.one.easyfood.adapters.SearchedMealAdapter
 import com.one.easyfood.databinding.ActivitySearchBinding
 import com.one.easyfood.models.Meal
@@ -42,7 +47,6 @@ class SearchActivity : AppCompatActivity() {
             if (isConnected) {
                 getSearchedMeal(searchedMealName)
             } else {
-                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -68,7 +72,6 @@ class SearchActivity : AppCompatActivity() {
             } else {
                 this.isConnected = isConnected
                 searchedMealAdapter.setIsConnected(isConnected)
-                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -79,7 +82,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun getSearchedMeal(searchedMealName: String?) {
-        if(searchedMealName != null){
+        if (searchedMealName != null) {
             viewModel.searchMeals(searchedMealName).observe(this, Observer { mealsList ->
                 if (mealsList != null) {
                     if (!mealsList.meals.isNullOrEmpty()) {
