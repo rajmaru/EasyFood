@@ -45,8 +45,6 @@ class SearchedMealAdapter : RecyclerView.Adapter<SearchedMealAdapter.SearchedMea
                 val intent = Intent(context, MealActivity::class.java)
                 intent.putExtra("MEAL_ID", searchedMeals[position].idMeal)
                 context.startActivity(intent)
-            }else{
-                Toast.makeText(this.context, "No Internet Connection", Toast.LENGTH_SHORT).show()
             }
         }
     }

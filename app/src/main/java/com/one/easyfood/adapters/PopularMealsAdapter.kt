@@ -16,11 +16,16 @@ class PopularMealsAdapter : RecyclerView.Adapter<PopularMealsAdapter.PopularMeal
 
     private var popularMealsList= ArrayList<Meal>()
     private lateinit var context: Context
+    private var isConnected: Boolean = false
 
     fun setPopularMealsList(context: Context, popularMealsList: ArrayList<Meal>) {
         this.context = context
         this.popularMealsList = popularMealsList
         notifyDataSetChanged()
+    }
+
+    fun setIsConnected(isConnected: Boolean){
+        this.isConnected = isConnected
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularMealsViewHolder {
@@ -39,9 +44,11 @@ class PopularMealsAdapter : RecyclerView.Adapter<PopularMealsAdapter.PopularMeal
             .transition(DrawableTransitionOptions.withCrossFade(factory))
             .into(holder.binding.imgMeal)
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, MealActivity::class.java)
-            intent.putExtra("MEAL_ID",popularMealsList[position].idMeal)
-            context.startActivity(intent)
+            if(isConnected){
+                val intent = Intent(context, MealActivity::class.java)
+                intent.putExtra("MEAL_ID", popularMealsList[position].idMeal)
+                context.startActivity(intent)
+            }
         }
     }
 

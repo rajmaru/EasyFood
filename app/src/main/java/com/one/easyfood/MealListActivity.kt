@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.one.easyfood.adapters.MealListAdapter
 import com.one.easyfood.databinding.ActivityMealListBinding
+import com.one.easyfood.itemdecoration.MealListItemMargin
 import com.one.easyfood.models.Meal
 import com.one.easyfood.networkconnection.NetworkConnection
 import com.one.easyfood.viewmodel.MealsViewModel
@@ -18,6 +19,7 @@ class MealListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMealListBinding
     private lateinit var viewModel: MealsViewModel
     private lateinit var mealListAdapter: MealListAdapter
+    private lateinit var mealListItemMargin: MealListItemMargin
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +34,7 @@ class MealListActivity : AppCompatActivity() {
     private fun init() {
         viewModel = ViewModelProvider(this, MealsViewModelFactory(this))[MealsViewModel::class.java]
         mealListAdapter = MealListAdapter()
+        mealListItemMargin = MealListItemMargin()
     }
 
     override fun onStop() {
@@ -68,6 +71,8 @@ class MealListActivity : AppCompatActivity() {
         mealListAdapter.setMeallist(this, meals as ArrayList<Meal> )
         binding.tvMeallistTotal.text = "Total: ${meals.size.toString()}"
         binding.rvMeallist.apply {
+            removeItemDecoration(mealListItemMargin)
+            addItemDecoration(mealListItemMargin)
             adapter = mealListAdapter
             layoutManager = GridLayoutManager(this@MealListActivity, 2)
         }

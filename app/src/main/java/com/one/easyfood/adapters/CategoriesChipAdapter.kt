@@ -17,11 +17,14 @@ class CategoriesChipAdapter :
     private lateinit var context: Context
     private var categories = ArrayList<Category>()
     private var isConnected: Boolean = false
-    fun setCategoryList(context: Context, categories: ArrayList<Category>, isConnected: Boolean) {
+    fun setCategoryList(context: Context, categories: ArrayList<Category>) {
         this.context = context
         this.categories = categories
-        this.isConnected = isConnected
         notifyDataSetChanged()
+    }
+
+    fun setIsConnected(isConnected: Boolean){
+        this.isConnected = isConnected
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoriesChipViewHolder {
@@ -41,8 +44,6 @@ class CategoriesChipAdapter :
                 val intent = Intent(context, MealListActivity::class.java)
                 intent.putExtra("CATEGORY_NAME", categories[position].strCategory)
                 context.startActivity(intent)
-            } else {
-                Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show()
             }
         }
     }

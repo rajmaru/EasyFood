@@ -16,11 +16,16 @@ class RecommendedAdapter: RecyclerView.Adapter<RecommendedAdapter.RecommendedVie
 
     private var recommendedList= ArrayList<Meal>()
     private lateinit var context: Context
+    private var isConnected: Boolean = false
 
     fun setRecommendedList(context: Context, recommendedList: ArrayList<Meal>) {
         this.context = context
         this.recommendedList = recommendedList
         notifyDataSetChanged()
+    }
+
+    fun setIsConnected(isConnected: Boolean){
+        this.isConnected = isConnected
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecommendedViewHolder {
@@ -39,9 +44,11 @@ class RecommendedAdapter: RecyclerView.Adapter<RecommendedAdapter.RecommendedVie
             .transition(DrawableTransitionOptions.withCrossFade(factory))
             .into(holder.binding.imgMeal)
         holder.itemView.setOnClickListener {
-            var intent = Intent(context, MealActivity::class.java)
-            intent.putExtra("MEAL_ID", recommendedList[position].idMeal)
-            context.startActivity(intent)
+            if(isConnected){
+                val intent = Intent(context, MealActivity::class.java)
+                intent.putExtra("MEAL_ID", recommendedList[position].idMeal)
+                context.startActivity(intent)
+            }
         }
     }
 

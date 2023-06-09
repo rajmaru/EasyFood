@@ -14,7 +14,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.one.easyfood.MainActivity
 import com.one.easyfood.adapters.CategoriesAdapter
 import com.one.easyfood.databinding.FragmentCategoriesBinding
+import com.one.easyfood.itemdecoration.CategoriesListItemMargin
 import com.one.easyfood.models.Category
+import com.one.easyfood.models.CategoryList
 import com.one.easyfood.networkconnection.NetworkConnection
 import com.one.easyfood.viewmodel.MealsViewModel
 import com.one.easyfood.viewmodel.MealsViewModelFactory
@@ -25,6 +27,8 @@ class CategoriesFragment : Fragment() {
     private lateinit var categoriesAdapter: CategoriesAdapter
     private lateinit var networkConnection: NetworkConnection
     private var isConnected: Boolean = false
+    private lateinit var categoriesListItemMargin: CategoriesListItemMargin
+    private var categoriesList: List<Category>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,13 +52,20 @@ class CategoriesFragment : Fragment() {
             MealsViewModelFactory(requireContext())
         )[MealsViewModel::class.java]
         categoriesAdapter = CategoriesAdapter()
+        categoriesListItemMargin = CategoriesListItemMargin()
     }
 
     private fun checkNetworkConnection() {
         networkConnection.observe(viewLifecycleOwner) { isConnected ->
             this.isConnected = isConnected
+            categoriesAdapter.setIsConnected(isConnected)
             if (isConnected) {
-                 getCategories()
+                getCategories()
+            }else{
+                if(categoriesList == null){
+                    binding.rvCategories.visibility = View.GONE
+                    binding.categoriesShimmerLayout.visibility = View.VISIBLE
+                }
             }
         }
     }
@@ -62,26 +73,38 @@ class CategoriesFragment : Fragment() {
     private fun onRefresh() {
         binding.catgeoriesRefresh.setOnRefreshListener {
             if(isConnected){
-                getCategories()
+                binding.catgeoriesRefresh.isRefreshing = false
+                if(categoriesList == null){
+                    getCategories()
+                }
             }else{
                 binding.catgeoriesRefresh.isRefreshing = false
+                if(categoriesList == null){
+                    binding.rvCategories.visibility = View.GONE
+                    binding.categoriesShimmerLayout.visibility = View.VISIBLE
+                }
             }
 
         }
     }
 
     private fun getCategories() {
-        viewModel.getCategories().observe(viewLifecycleOwner, Observer { categories ->
-            categories?.let {
-                categoriesAdapter.setCategoriesList(requireContext(), it.categories as ArrayList<Category>)
+        viewModel.getCategories().observe(viewLifecycleOwner, Observer { categoriesList ->
+            if(categoriesList != null){
+                this.categoriesList = categoriesList.categories
+                binding.catgeoriesRefresh.isRefreshing = false
+                binding.rvCategories.visibility = View.VISIBLE
+                binding.categoriesShimmerLayout.visibility = View.GONE
+                setCategoriesRV()
             }
-            binding.catgeoriesRefresh.isRefreshing = false
-            setCategoriesRV()
         })
     }
 
     private fun setCategoriesRV() {
+        categoriesAdapter.setCategoriesList(requireContext(), categoriesList as ArrayList<Category>)
         binding.rvCategories.apply {
+            removeItemDecoration(categoriesListItemMargin)
+            addItemDecoration(categoriesListItemMargin)
             adapter = categoriesAdapter
             layoutManager = GridLayoutManager(context, 3)
         }

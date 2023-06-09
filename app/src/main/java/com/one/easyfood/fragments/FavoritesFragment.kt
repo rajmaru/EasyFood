@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.one.easyfood.MainActivity
 import com.one.easyfood.adapters.FavoriteMealsAdapter
 import com.one.easyfood.databinding.FragmentFavoritesBinding
+import com.one.easyfood.itemdecoration.MealListItemMargin
 import com.one.easyfood.models.Meal
 import com.one.easyfood.viewmodel.MealsViewModel
 import com.one.easyfood.viewmodel.MealsViewModelFactory
@@ -20,6 +21,7 @@ class FavoritesFragment : Fragment() {
     private lateinit var binding: FragmentFavoritesBinding
     private lateinit var viewModel: MealsViewModel
     private lateinit var favMealsAdapter: FavoriteMealsAdapter
+    private lateinit var mealListItemMargin: MealListItemMargin
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +44,7 @@ class FavoritesFragment : Fragment() {
             MealsViewModelFactory(requireContext())
         )[MealsViewModel::class.java]
         favMealsAdapter = FavoriteMealsAdapter()
+        mealListItemMargin = MealListItemMargin()
     }
 
     private fun setOnRefreshListener() {
@@ -58,6 +61,7 @@ class FavoritesFragment : Fragment() {
     private fun getFavMeals() {
         viewModel.getFavMeals().observe(viewLifecycleOwner, Observer { favMeals ->
             if (favMeals.isNullOrEmpty()) {
+                setFavMealsRV(favMeals)
                 showEmptyFavoritesLayout()
             } else {
                 hideEmptyFavoritesLayout()
@@ -77,6 +81,8 @@ class FavoritesFragment : Fragment() {
     private fun setFavMealsRV(favMeals: List<Meal>) {
         favMealsAdapter.setFavMealsList(requireContext(), favMeals)
         binding.rvFavorites.apply {
+            removeItemDecoration(mealListItemMargin)
+            addItemDecoration(mealListItemMargin)
             adapter = favMealsAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)
         }

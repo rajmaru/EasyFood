@@ -12,16 +12,155 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
             <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_categories"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" >
+                android:id="@+id/rv_categories"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
             </androidx.recyclerview.widget.RecyclerView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/categories_shimmer_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/categories_shimmer12"
+                    android:layout_width="119dp"
+                    android:layout_height="149dp"
+                    app:cardBackgroundColor="@color/surface"
+                    app:cardCornerRadius="16dp"
+                    app:layout_constraintEnd_toEndOf="@+id/categories_shimmer9"
+                    app:layout_constraintTop_toTopOf="@+id/categories_shimmer11" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/categories_shimmer11"
+                    android:layout_width="119dp"
+                    android:layout_height="149dp"
+                    app:cardBackgroundColor="@color/surface"
+                    app:cardCornerRadius="16dp"
+                    app:layout_constraintEnd_toStartOf="@+id/categories_shimmer12"
+                    app:layout_constraintStart_toEndOf="@+id/categories_shimmer10"
+                    app:layout_constraintTop_toTopOf="@+id/categories_shimmer10" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/categories_shimmer7"
+                    android:layout_width="119dp"
+                    android:layout_height="149dp"
+                    android:layout_marginTop="45dp"
+                    app:cardBackgroundColor="@color/surface"
+                    app:cardCornerRadius="16dp"
+                    app:layout_constraintStart_toStartOf="@+id/categories_shimmer4"
+                    app:layout_constraintTop_toBottomOf="@+id/categories_shimmer4" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/categories_shimmer8"
+                    android:layout_width="119dp"
+                    android:layout_height="149dp"
+                    app:cardBackgroundColor="@color/surface"
+                    app:cardCornerRadius="16dp"
+                    app:layout_constraintEnd_toStartOf="@+id/categories_shimmer9"
+                    app:layout_constraintStart_toEndOf="@+id/categories_shimmer7"
+                    app:layout_constraintTop_toTopOf="@+id/categories_shimmer7" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/categories_shimmer10"
+                    android:layout_width="119dp"
+                    android:layout_height="149dp"
+                    android:layout_marginTop="39dp"
+                    app:cardBackgroundColor="@color/surface"
+                    app:cardCornerRadius="16dp"
+                    app:layout_constraintStart_toStartOf="@+id/categories_shimmer7"
+                    app:layout_constraintTop_toBottomOf="@+id/categories_shimmer7" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/categories_shimmer4"
+                    android:layout_width="119dp"
+                    android:layout_height="149dp"
+                    android:layout_marginTop="45dp"
+                    app:cardBackgroundColor="@color/surface"
+                    app:cardCornerRadius="16dp"
+                    app:layout_constraintStart_toStartOf="@+id/categories_shimmer1"
+                    app:layout_constraintTop_toBottomOf="@+id/categories_shimmer1" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/categories_shimmer6"
+                    android:layout_width="119dp"
+                    android:layout_height="149dp"
+                    app:cardBackgroundColor="@color/surface"
+                    app:cardCornerRadius="16dp"
+                    app:layout_constraintEnd_toEndOf="@+id/categories_shimmer3"
+                    app:layout_constraintTop_toTopOf="@+id/categories_shimmer4" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/categories_shimmer9"
+                    android:layout_width="119dp"
+                    android:layout_height="149dp"
+                    android:layout_marginTop="45dp"
+                    app:cardBackgroundColor="@color/surface"
+                    app:cardCornerRadius="16dp"
+                    app:layout_constraintEnd_toEndOf="@+id/categories_shimmer6"
+                    app:layout_constraintTop_toBottomOf="@+id/categories_shimmer4" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/categories_shimmer2"
+                    android:layout_width="119dp"
+                    android:layout_height="149dp"
+                    app:cardBackgroundColor="@color/surface"
+                    app:cardCornerRadius="16dp"
+                    app:layout_constraintEnd_toStartOf="@+id/categories_shimmer3"
+                    app:layout_constraintStart_toEndOf="@+id/categories_shimmer1"
+                    app:layout_constraintTop_toTopOf="@+id/categories_shimmer1" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/categories_shimmer1"
+                    android:layout_width="119dp"
+                    android:layout_height="149dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="15dp"
+                    app:cardBackgroundColor="@color/surface"
+                    app:cardCornerRadius="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/categories_shimmer5"
+                    android:layout_width="119dp"
+                    android:layout_height="149dp"
+                    app:cardBackgroundColor="@color/surface"
+                    app:cardCornerRadius="16dp"
+                    app:layout_constraintEnd_toStartOf="@+id/categories_shimmer6"
+                    app:layout_constraintStart_toEndOf="@+id/categories_shimmer4"
+                    app:layout_constraintTop_toTopOf="@+id/categories_shimmer4" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/categories_shimmer3"
+                    android:layout_width="119dp"
+                    android:layout_height="149dp"
+                    android:layout_marginEnd="11dp"
+                    app:cardBackgroundColor="@color/surface"
+                    app:cardCornerRadius="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/categories_shimmer2" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </FrameLayout>

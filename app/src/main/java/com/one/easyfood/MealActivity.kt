@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -12,6 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
+import com.google.android.material.snackbar.BaseTransientBottomBar.ANIMATION_MODE_FADE
+import com.google.android.material.snackbar.BaseTransientBottomBar.ANIMATION_MODE_SLIDE
+import com.google.android.material.snackbar.Snackbar
 import com.one.easyfood.adapters.IngredientsAdapter
 import com.one.easyfood.databinding.ActivityMealBinding
 import com.one.easyfood.itemdecoration.IngredientsItemMargin
@@ -35,6 +40,10 @@ class MealActivity : AppCompatActivity() {
     private lateinit var customItemMargin: IngredientsItemMargin
     private lateinit var networkConnection: NetworkConnection
     private var isConnected: Boolean = false
+    private lateinit var snackbar: Snackbar
+    private lateinit var slideUpAnimation: Animation
+    private lateinit var slideDownAnimation: Animation
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,19 +58,39 @@ class MealActivity : AppCompatActivity() {
 
     private fun init() {
         viewModel = ViewModelProvider(this, MealsViewModelFactory(this))[MealsViewModel::class.java]
+        snackbar = Snackbar.make(binding.mealSnackbarLayout, "No Internet Connection", Snackbar.LENGTH_INDEFINITE)
+            .setAnchorView(binding.mealSnackbarLayout)
+            .setBackgroundTint(resources.getColor(R.color.theme))
+            .setTextColor(resources.getColor(R.color.snackbar_text))
+            .setAnimationMode(ANIMATION_MODE_SLIDE)
+            .setAction("Cancel"){
+                snackbar.dismiss()
+            }
+            .setActionTextColor(resources.getColor(R.color.snackbar_text))
         ingredientsAdapter = IngredientsAdapter()
         customItemMargin = IngredientsItemMargin()
+        slideUpAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up)
+        slideDownAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_down)
     }
 
     private fun checkInternetConnection() {
         networkConnection = NetworkConnection(this)
         networkConnection.observe(this) { isConnected ->
             this.isConnected = isConnected
-            if (!isConnected) {
-                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show()
+            if (isConnected) {
+                if(snackbar.isShown){
+                    snackbar.dismiss()
+                    binding.btnYoutube.startAnimation(slideUpAnimation)
+                    binding.btnYoutube.visibility = View.VISIBLE
+                }
+                getMealId()
+            } else {
+                if(!snackbar.isShown){
+                    binding.btnYoutube.startAnimation(slideDownAnimation)
+                    binding.btnYoutube.visibility = View.GONE
+                    snackbar.show()
+                }
             }
-            Log.d("MEAL_DB", "from checkInternetConnection()")
-            getMealId()
         }
     }
 
@@ -83,9 +112,11 @@ class MealActivity : AppCompatActivity() {
 
 
         binding.btnYoutube.setOnClickListener {
-            val intent = Intent(this, VideoView::class.java)
-            intent.putExtra("MEAL_YOUTUBE_LINK", youtubeLink!!)
-            startActivity(intent)
+            if(isConnected){
+                val intent = Intent(this, VideoView::class.java)
+                intent.putExtra("MEAL_YOUTUBE_LINK", youtubeLink!!)
+                startActivity(intent)
+            }
         }
     }
 
