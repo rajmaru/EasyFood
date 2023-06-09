@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
-import com.one.easyfood.MealActivity
+import com.one.easyfood.activities.MealActivity
 import com.one.easyfood.databinding.MealCardBinding
 import com.one.easyfood.models.Meal
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".MealActivity">
+    tools:context=".activities.MealActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/meal_activity_toolbar"
@@ -29,7 +29,7 @@
         <ImageView
             android:id="@+id/img_meal_gradient"
             android:layout_width="0dp"
-            android:layout_height="140dp"
+            android:layout_height="160dp"
             android:alpha="0.6"
             app:layout_constraintBottom_toBottomOf="@+id/img_meal"
             app:layout_constraintEnd_toEndOf="parent"

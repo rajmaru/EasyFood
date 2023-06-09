@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.one.easyfood.MainActivity
 import com.one.easyfood.adapters.FavoriteMealsAdapter
 import com.one.easyfood.databinding.FragmentFavoritesBinding
 import com.one.easyfood.itemdecoration.MealListItemMargin

@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,16 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
-import com.one.easyfood.MealActivity
+import com.one.easyfood.activities.MealActivity
 import com.one.easyfood.adapters.CategoriesChipAdapter
 import com.one.easyfood.adapters.PopularMealsAdapter
 import com.one.easyfood.adapters.RecommendedAdapter
 import com.one.easyfood.databinding.FragmentHomeBinding
 import com.one.easyfood.itemdecoration.CustomItemMargin
 import com.one.easyfood.models.Category
-import com.one.easyfood.models.CategoryList
 import com.one.easyfood.models.Meal
-import com.one.easyfood.models.MealsList
 import com.one.easyfood.networkconnection.NetworkConnection
 import com.one.easyfood.viewmodel.MealsViewModel
 import com.one.easyfood.viewmodel.MealsViewModelFactory

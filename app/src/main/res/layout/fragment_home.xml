@@ -29,6 +29,7 @@
                     android:layout_marginEnd="16dp"
                     app:cardBackgroundColor="@color/shimmer_surface"
                     app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
                     app:cardUseCompatPadding="false"
                     app:elevation="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -101,6 +102,7 @@
                         android:layout_marginStart="16dp"
                         android:backgroundTint="@color/shimmer_surface"
                         app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
                         app:layout_constraintStart_toEndOf="@id/categories_chip_shimmer1"
                         app:layout_constraintTop_toTopOf="@+id/categories_chip_shimmer1" />
 
@@ -110,6 +112,7 @@
                         android:layout_height="40dp"
                         android:backgroundTint="@color/shimmer_surface"
                         app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -120,6 +123,7 @@
                         android:layout_marginStart="16dp"
                         android:backgroundTint="@color/shimmer_surface"
                         app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
                         app:layout_constraintStart_toEndOf="@+id/categories_chip_shimmer2"
                         app:layout_constraintTop_toTopOf="@+id/categories_chip_shimmer2" />
 
@@ -131,7 +135,8 @@
                         android:backgroundTint="@color/shimmer_surface"
                         app:cardCornerRadius="12dp"
                         app:layout_constraintStart_toEndOf="@id/categories_chip_shimmer3"
-                        app:layout_constraintTop_toTopOf="@id/categories_chip_shimmer3" />
+                        app:layout_constraintTop_toTopOf="@id/categories_chip_shimmer3"
+                        app:cardElevation="0dp" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -176,6 +181,7 @@
                         android:layout_height="186dp"
                         android:backgroundTint="@color/shimmer_surface"
                         app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -186,6 +192,7 @@
                         android:layout_marginStart="16dp"
                         android:backgroundTint="@color/shimmer_surface"
                         app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
                         app:layout_constraintStart_toEndOf="@+id/popular_shimmer1"
                         app:layout_constraintTop_toTopOf="@+id/popular_shimmer1" />
 
@@ -230,6 +237,7 @@
                         android:layout_height="280dp"
                         android:backgroundTint="@color/shimmer_surface"
                         app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 
@@ -240,6 +248,7 @@
                         android:layout_marginStart="16dp"
                         android:backgroundTint="@color/shimmer_surface"
                         app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
                         app:layout_constraintStart_toEndOf="@+id/recommended_shimmer1"
                         app:layout_constraintTop_toTopOf="@id/recommended_shimmer1" />
                 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.one.easyfood
+package com.one.easyfood.activities
 
 import android.os.Bundle
 import android.util.Log
@@ -36,15 +36,12 @@ class VideoView : AppCompatActivity() {
     }
 
     private fun prepareYoutubePlayer() {
-
         lifecycle.addObserver(binding.youtubePlayerView)
 
-        binding.youtubePlayerView.addYouTubePlayerListener(object :
-            AbstractYouTubePlayerListener() {
+        binding.youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 youTubePlayer.loadVideo(url, 0F)
             }
         })
     }
-
 }

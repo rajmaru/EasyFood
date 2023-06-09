@@ -44,6 +44,7 @@
                     android:layout_height="149dp"
                     app:cardBackgroundColor="@color/surface"
                     app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintEnd_toEndOf="@+id/categories_shimmer9"
                     app:layout_constraintTop_toTopOf="@+id/categories_shimmer11" />
 
@@ -53,6 +54,7 @@
                     android:layout_height="149dp"
                     app:cardBackgroundColor="@color/surface"
                     app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintEnd_toStartOf="@+id/categories_shimmer12"
                     app:layout_constraintStart_toEndOf="@+id/categories_shimmer10"
                     app:layout_constraintTop_toTopOf="@+id/categories_shimmer10" />
@@ -64,6 +66,7 @@
                     android:layout_marginTop="45dp"
                     app:cardBackgroundColor="@color/surface"
                     app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintStart_toStartOf="@+id/categories_shimmer4"
                     app:layout_constraintTop_toBottomOf="@+id/categories_shimmer4" />
 
@@ -73,6 +76,7 @@
                     android:layout_height="149dp"
                     app:cardBackgroundColor="@color/surface"
                     app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintEnd_toStartOf="@+id/categories_shimmer9"
                     app:layout_constraintStart_toEndOf="@+id/categories_shimmer7"
                     app:layout_constraintTop_toTopOf="@+id/categories_shimmer7" />
@@ -84,6 +88,7 @@
                     android:layout_marginTop="39dp"
                     app:cardBackgroundColor="@color/surface"
                     app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintStart_toStartOf="@+id/categories_shimmer7"
                     app:layout_constraintTop_toBottomOf="@+id/categories_shimmer7" />
 
@@ -94,6 +99,7 @@
                     android:layout_marginTop="45dp"
                     app:cardBackgroundColor="@color/surface"
                     app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintStart_toStartOf="@+id/categories_shimmer1"
                     app:layout_constraintTop_toBottomOf="@+id/categories_shimmer1" />
 
@@ -103,6 +109,7 @@
                     android:layout_height="149dp"
                     app:cardBackgroundColor="@color/surface"
                     app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintEnd_toEndOf="@+id/categories_shimmer3"
                     app:layout_constraintTop_toTopOf="@+id/categories_shimmer4" />
 
@@ -113,6 +120,7 @@
                     android:layout_marginTop="45dp"
                     app:cardBackgroundColor="@color/surface"
                     app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintEnd_toEndOf="@+id/categories_shimmer6"
                     app:layout_constraintTop_toBottomOf="@+id/categories_shimmer4" />
 
@@ -122,6 +130,7 @@
                     android:layout_height="149dp"
                     app:cardBackgroundColor="@color/surface"
                     app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintEnd_toStartOf="@+id/categories_shimmer3"
                     app:layout_constraintStart_toEndOf="@+id/categories_shimmer1"
                     app:layout_constraintTop_toTopOf="@+id/categories_shimmer1" />
@@ -134,6 +143,7 @@
                     android:layout_marginTop="15dp"
                     app:cardBackgroundColor="@color/surface"
                     app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -143,6 +153,7 @@
                     android:layout_height="149dp"
                     app:cardBackgroundColor="@color/surface"
                     app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintEnd_toStartOf="@+id/categories_shimmer6"
                     app:layout_constraintStart_toEndOf="@+id/categories_shimmer4"
                     app:layout_constraintTop_toTopOf="@+id/categories_shimmer4" />
@@ -154,6 +165,7 @@
                     android:layout_marginEnd="11dp"
                     app:cardBackgroundColor="@color/surface"
                     app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/categories_shimmer2" />
 

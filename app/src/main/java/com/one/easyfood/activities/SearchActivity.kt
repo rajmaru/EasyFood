@@ -1,19 +1,15 @@
-package com.one.easyfood
+package com.one.easyfood.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Html
-import android.view.Gravity
 import android.view.View
-import android.widget.Toast
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.BaseTransientBottomBar.ANIMATION_MODE_SLIDE
 import com.google.android.material.snackbar.Snackbar
+import com.one.easyfood.R
 import com.one.easyfood.adapters.SearchedMealAdapter
 import com.one.easyfood.databinding.ActivitySearchBinding
 import com.one.easyfood.itemdecoration.MealListItemMargin

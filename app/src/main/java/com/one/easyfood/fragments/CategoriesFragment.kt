@@ -9,14 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bumptech.glide.Glide.init
-import com.google.android.material.snackbar.Snackbar
-import com.one.easyfood.MainActivity
 import com.one.easyfood.adapters.CategoriesAdapter
 import com.one.easyfood.databinding.FragmentCategoriesBinding
 import com.one.easyfood.itemdecoration.CategoriesListItemMargin
 import com.one.easyfood.models.Category
-import com.one.easyfood.models.CategoryList
 import com.one.easyfood.networkconnection.NetworkConnection
 import com.one.easyfood.viewmodel.MealsViewModel
 import com.one.easyfood.viewmodel.MealsViewModelFactory

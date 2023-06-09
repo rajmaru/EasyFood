@@ -4,9 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.one.easyfood.MealListActivity
+import com.one.easyfood.activities.MealListActivity
 import com.one.easyfood.databinding.HomeCategoriesChipBinding
 import com.one.easyfood.models.Category
 
