@@ -1,8 +1,8 @@
 package com.one.easyfood.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.BaseTransientBottomBar.ANIMATION_MODE_SLIDE
 import com.google.android.material.snackbar.Snackbar
 import com.one.easyfood.R
-import com.one.easyfood.adapters.SearchedMealAdapter
+import com.one.easyfood.adapters.MealsListAdapter
 import com.one.easyfood.databinding.ActivitySearchBinding
 import com.one.easyfood.itemdecoration.MealListItemMargin
 import com.one.easyfood.models.Meal
@@ -22,7 +22,7 @@ class SearchActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySearchBinding
     private lateinit var viewModel: MealsViewModel
-    private lateinit var searchedMealAdapter: SearchedMealAdapter
+    private lateinit var mealsListAdapter: MealsListAdapter
     private lateinit var networkConnection: NetworkConnection
     private var isConnected: Boolean = false
     private lateinit var mealsList: List<Meal>
@@ -44,7 +44,7 @@ class SearchActivity : AppCompatActivity() {
 
     private fun init() {
         viewModel = ViewModelProvider(this, MealsViewModelFactory(this))[MealsViewModel::class.java]
-        searchedMealAdapter = SearchedMealAdapter()
+        mealsListAdapter = MealsListAdapter()
         mealListItemMargin = MealListItemMargin()
         snackbar = Snackbar.make(binding.searchSnackbarLayout, "No Internet Connection", Snackbar.LENGTH_INDEFINITE)
             .setAnchorView(binding.searchSnackbarLayout)
@@ -61,7 +61,7 @@ class SearchActivity : AppCompatActivity() {
         networkConnection = NetworkConnection(this)
         networkConnection.observe(this) { isConnected ->
             this.isConnected = isConnected
-            searchedMealAdapter.setIsConnected(isConnected)
+            mealsListAdapter.setIsConnected(isConnected)
             if (isConnected) {
                 if(snackbar.isShown){
                     snackbar.dismiss()
@@ -108,11 +108,11 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun setSearchedMealsRv(mealsList: List<Meal>) {
-        searchedMealAdapter.setSearchedMealList(this@SearchActivity, mealsList as ArrayList<Meal>)
+        mealsListAdapter.setMeallist(this@SearchActivity, mealsList as ArrayList<Meal>)
         binding.searchMealRv.apply {
             removeItemDecoration(mealListItemMargin)
             addItemDecoration(mealListItemMargin)
-            adapter = searchedMealAdapter
+            adapter = mealsListAdapter
             layoutManager = GridLayoutManager(this@SearchActivity, 2)
         }
     }

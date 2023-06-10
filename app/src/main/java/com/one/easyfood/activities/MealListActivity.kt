@@ -6,7 +6,10 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.one.easyfood.adapters.MealListAdapter
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
+import com.one.easyfood.R
+import com.one.easyfood.adapters.MealsListAdapter
 import com.one.easyfood.databinding.ActivityMealListBinding
 import com.one.easyfood.itemdecoration.MealListItemMargin
 import com.one.easyfood.models.Meal
@@ -18,8 +21,9 @@ class MealListActivity : AppCompatActivity() {
     private lateinit var networkConnection: NetworkConnection
     private lateinit var binding: ActivityMealListBinding
     private lateinit var viewModel: MealsViewModel
-    private lateinit var mealListAdapter: MealListAdapter
+    private lateinit var mealsListAdapter: MealsListAdapter
     private lateinit var mealListItemMargin: MealListItemMargin
+    private lateinit var snackbar: Snackbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +37,17 @@ class MealListActivity : AppCompatActivity() {
 
     private fun init() {
         viewModel = ViewModelProvider(this, MealsViewModelFactory(this))[MealsViewModel::class.java]
-        mealListAdapter = MealListAdapter()
+        mealsListAdapter = MealsListAdapter()
         mealListItemMargin = MealListItemMargin()
+        snackbar = Snackbar.make(binding.meallistSnackbarLayout, "No Internet Connection", Snackbar.LENGTH_INDEFINITE)
+            .setAnchorView(binding.meallistSnackbarLayout)
+            .setBackgroundTint(resources.getColor(R.color.snackbar_bg))
+            .setTextColor(resources.getColor(R.color.snackbar_text))
+            .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+            .setAction("Cancel"){
+                snackbar.dismiss()
+            }
+            .setActionTextColor(resources.getColor(R.color.snackbar_text))
     }
 
     override fun onStop() {
@@ -45,12 +58,16 @@ class MealListActivity : AppCompatActivity() {
     private fun checkInternetConnection() {
         networkConnection = NetworkConnection(this)
         networkConnection.observe(this) { isConnected ->
-            val message = if (isConnected) {
-                "MealListActivity: Connected"
-            } else {
-                "MealListActivity: Not Connected"
+            mealsListAdapter.setIsConnected(isConnected)
+            if(isConnected){
+                if(snackbar.isShown){
+                   snackbar.dismiss()
+                }
+            }else{
+                if(!snackbar.isShown){
+                    snackbar.show()
+                }
             }
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -68,12 +85,12 @@ class MealListActivity : AppCompatActivity() {
     }
 
     private fun setMealListRV(meals: List<Meal>) {
-        mealListAdapter.setMeallist(this, meals as ArrayList<Meal> )
+        mealsListAdapter.setMeallist(this, meals as ArrayList<Meal> )
         binding.tvMeallistTotal.text = "Total: ${meals.size.toString()}"
         binding.rvMeallist.apply {
             removeItemDecoration(mealListItemMargin)
             addItemDecoration(mealListItemMargin)
-            adapter = mealListAdapter
+            adapter = mealsListAdapter
             layoutManager = GridLayoutManager(this@MealListActivity, 2)
         }
     }

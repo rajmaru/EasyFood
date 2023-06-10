@@ -76,5 +76,4 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:2.5.1"
     //Youtube Video Player
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:12.0.0'
-
 }

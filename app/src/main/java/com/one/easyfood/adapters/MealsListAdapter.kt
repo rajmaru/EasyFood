@@ -12,14 +12,15 @@ import com.one.easyfood.activities.MealActivity
 import com.one.easyfood.databinding.MealCardBinding
 import com.one.easyfood.models.Meal
 
-class SearchedMealAdapter : RecyclerView.Adapter<SearchedMealAdapter.SearchedMealViewHolder>() {
-    private var searchedMeals = ArrayList<Meal>()
+class MealsListAdapter : RecyclerView.Adapter<MealsListAdapter.MealListViewHolder>() {
+
+    private var meals = ArrayList<Meal>()
     private lateinit var context: Context
     private var isConnected: Boolean = false
 
-    fun setSearchedMealList(context: Context, searchedMeals: ArrayList<Meal>){
-        this.searchedMeals = searchedMeals
+    fun setMeallist(context: Context, meals: ArrayList<Meal>) {
         this.context = context
+        this.meals = meals
         notifyDataSetChanged()
     }
 
@@ -27,32 +28,38 @@ class SearchedMealAdapter : RecyclerView.Adapter<SearchedMealAdapter.SearchedMea
         this.isConnected = isConnected
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchedMealViewHolder {
-        return SearchedMealViewHolder(MealCardBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealListViewHolder {
+        return MealListViewHolder(
+            MealCardBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
-    override fun onBindViewHolder(holder: SearchedMealViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MealListViewHolder, position: Int) {
         val factory = DrawableCrossFadeFactory.Builder()
             .setCrossFadeEnabled(true)
             .build()
-        holder.binding.tvMeal.text = searchedMeals[position].strMeal
-        Glide.with(holder.itemView).load(searchedMeals[position].strMealThumb)
+        holder.binding.tvMeal.text = meals[position].strMeal
+        Glide.with(holder.itemView).load(meals[position].strMealThumb)
             .transition(DrawableTransitionOptions.withCrossFade(factory))
             .into(holder.binding.imgMeal)
         holder.itemView.setOnClickListener {
             if(isConnected){
                 val intent = Intent(context, MealActivity::class.java)
-                intent.putExtra("MEAL_ID", searchedMeals[position].idMeal)
+                intent.putExtra("MEAL_ID", meals[position].idMeal)
                 context.startActivity(intent)
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return searchedMeals.size
+        return meals.size
     }
 
-
-    inner class SearchedMealViewHolder(val binding: MealCardBinding) :
+    inner class MealListViewHolder(val binding: MealCardBinding) :
         RecyclerView.ViewHolder(binding.root)
+
 }

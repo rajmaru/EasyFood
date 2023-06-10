@@ -15,8 +15,8 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.one.easyfood.activities.MealActivity
 import com.one.easyfood.adapters.CategoriesChipAdapter
+import com.one.easyfood.adapters.MealsListAdapter
 import com.one.easyfood.adapters.PopularMealsAdapter
-import com.one.easyfood.adapters.RecommendedAdapter
 import com.one.easyfood.databinding.FragmentHomeBinding
 import com.one.easyfood.itemdecoration.CustomItemMargin
 import com.one.easyfood.models.Category
@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: MealsViewModel
     private lateinit var categoriesChipAdapter: CategoriesChipAdapter
     private lateinit var popularMealsAdapter: PopularMealsAdapter
-    private lateinit var recommendedAdapter: RecommendedAdapter
+    private lateinit var recommendedAdapter: MealsListAdapter
     private lateinit var customItemMargin: CustomItemMargin
     private var randomMeal: Meal? = null
     private var categoriesList: List<Category>? = null
@@ -64,7 +64,7 @@ class HomeFragment : Fragment() {
         )[MealsViewModel::class.java]
         categoriesChipAdapter = CategoriesChipAdapter()
         popularMealsAdapter = PopularMealsAdapter()
-        recommendedAdapter = RecommendedAdapter()
+        recommendedAdapter = MealsListAdapter()
         customItemMargin = CustomItemMargin()
         factory = DrawableCrossFadeFactory.Builder()
             .setCrossFadeEnabled(true)
@@ -222,7 +222,7 @@ class HomeFragment : Fragment() {
 
     private fun setRecommendedRV() {
         binding.rvHomeRecommended.removeItemDecoration(customItemMargin)
-        recommendedAdapter.setRecommendedList(requireContext(), recommendedList as ArrayList<Meal>)
+        recommendedAdapter.setMeallist(requireContext(), recommendedList as ArrayList<Meal>)
         binding.rvHomeRecommended.apply {
             addItemDecoration(customItemMargin)
             adapter = recommendedAdapter
