@@ -1,7 +1,6 @@
 package com.one.easyfood.viewmodel
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -46,8 +45,8 @@ class MealsViewModel(context: Context) : ViewModel() {
         return recommendedMeals
     }
 
-    fun getMealById(mealId: String): LiveData<Meal?> {
-        mealById = repository.getMealsById(mealId)
+    fun getMealFromApi(mealId: String): LiveData<Meal?> {
+        mealById = repository.getMealsFromApi(mealId)
         return mealById
     }
 

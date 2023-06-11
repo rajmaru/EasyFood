@@ -89,7 +89,7 @@ class MealsRepository(context: Context) {
         return recommendedMeals
     }
 
-    fun getMealsById(mealId: String): LiveData<Meal?> {
+    fun getMealsFromApi(mealId: String): LiveData<Meal?> {
         RetrofitRequest.apiRequest.getMealsById(mealId).enqueue(object : Callback<MealsList> {
             override fun onResponse(call: Call<MealsList>, response: Response<MealsList>) {
                 if (response.body() != null) {

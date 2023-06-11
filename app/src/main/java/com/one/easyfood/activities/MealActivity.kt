@@ -124,7 +124,7 @@ class MealActivity : AppCompatActivity() {
     private fun getMealDataById() {
         if (isConnected) {
             // Get Data From Api
-            viewModel.getMealById(mealId!!).observe(this, Observer { meal ->
+            viewModel.getMealFromApi(mealId!!).observe(this, Observer { meal ->
                 if (meal != null) {
                     this.meal = meal
                     if (!meal.strYoutube.isNullOrEmpty()) {
